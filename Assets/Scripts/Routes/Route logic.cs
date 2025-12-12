@@ -6,7 +6,7 @@ using UnityEngine;
 public class Routelogic : MonoBehaviour
 {
     LineRenderer lR;
-    public List<GameObject> routeWaypoints = new List<GameObject>();
+    public List<GameObject> rWp = new List<GameObject>();
     [SerializeField] GameObject baseWaypoint;
     [SerializeField] bool loop;
     [Header("Debug")]
@@ -26,14 +26,24 @@ public class Routelogic : MonoBehaviour
             updateRoute = false;
             UpdateRoute();
         }
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonUp(0))
         {
             Vector3 p = Input.mousePosition;
             Vector3 pos = Camera.main.ScreenToWorldPoint(p);
             AddRouteWaypoint(new Vector3(pos.x,pos.y,0));
             UpdateRoute();
         }
-        if (Input.GetMouseButtonDown(1))
+        if (Input.GetMouseButton(1))
+        {
+            Vector3 p = Input.mousePosition;
+            Vector3 pos = Camera.main.ScreenToWorldPoint(p);
+            if (rWp[0] != null)
+            {
+                rWp.Insert(0, null);
+            }
+            UpdateRoute();
+        }
+        if (Input.GetMouseButtonUp(1))
         {
             Vector3 p = Input.mousePosition;
             Vector3 pos = Camera.main.ScreenToWorldPoint(p);
@@ -42,7 +52,7 @@ public class Routelogic : MonoBehaviour
         }
         if (removeFirst)
         {
-            RemovePoint(routeWaypoints.Count - 1);
+            RemovePoint(rWp.Count - 1);
             removeFirst = false;
         }
         if (removeLast)
@@ -53,34 +63,47 @@ public class Routelogic : MonoBehaviour
     }
     void AddRouteWaypoint(Vector3 pos)
     {
-        routeWaypoints.Add(Instantiate(baseWaypoint, pos, transform.rotation, transform));
+        if (rWp[rWp.Count - 1] == null)
+        {
+            rWp[rWp.Count - 1] = Instantiate(baseWaypoint, pos, transform.rotation, transform);
+        }
+        else
+        {
+            rWp.Add(Instantiate(baseWaypoint, pos, transform.rotation, transform));
+        }
     }
     void AddRouteWaypoint(Vector3 pos, int index){
-        routeWaypoints.Insert(index, Instantiate(baseWaypoint, pos, transform.rotation, transform));
+        if (rWp[index] == null)
+        {
+            rWp[index] = Instantiate(baseWaypoint, pos, transform.rotation, transform);
+        }
+        else
+        {
+            rWp.Insert(index, Instantiate(baseWaypoint, pos, transform.rotation, transform));
+        }
     }
     void DestroyWaypoint()
     {
 
     }
     void UpdateRoute(){
-        lR.positionCount = routeWaypoints.Count;
-        if (routeWaypoints.Count < 2)
+        lR.positionCount = rWp.Count;
+        if (rWp.Count < 2)
             return;
         for(int i = 0; i < lR.positionCount; i++)
         {
-            lR.SetPosition(i, routeWaypoints[i].transform.position);
+            lR.SetPosition(i, rWp[i].transform.position);
         }
         if (loop)
         {
             lR.positionCount++;
             lR.SetPosition(lR.positionCount - 1, lR.GetPosition(0));
-            
         }
     }
     void RemovePoint(int index)
     {
 
-        routeWaypoints.RemoveAt(index);
+        rWp.RemoveAt(index);
         UpdateRoute();
     }
 }
