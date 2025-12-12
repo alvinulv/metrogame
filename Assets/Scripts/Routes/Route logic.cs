@@ -7,6 +7,7 @@ public class Routelogic : MonoBehaviour
 {
     LineRenderer lR;
     public List<GameObject> routeWaypoints = new List<GameObject>();
+    [SerializeField] GameObject bassPoint;
     [Header("Debug")]
     public bool updateRoute = true;
     public bool removenewest;
@@ -31,7 +32,7 @@ public class Routelogic : MonoBehaviour
             AddRouteWaypoint(new Vector3(pos.x,pos.y,0));
             UpdateRoute();
         }
-        if (Input.GetMouseButtonDown(2))
+        if (Input.GetMouseButtonDown(1))
         {
             Vector3 p = Input.mousePosition;
             Vector3 pos = Camera.main.ScreenToWorldPoint(p);
@@ -51,10 +52,10 @@ public class Routelogic : MonoBehaviour
     }
     void AddRouteWaypoint(Vector3 pos)
     {
-        routeWaypoints.Add(Instantiate(routeWaypoints[0], pos, transform.rotation, transform));
+        routeWaypoints.Add(Instantiate(bassPoint, pos, transform.rotation, transform));
     }
     void AddRouteWaypoint(Vector3 pos, int index){
-        routeWaypoints.Insert(index, Instantiate(routeWaypoints[0], pos, transform.rotation, transform));
+        routeWaypoints.Insert(index, Instantiate(bassPoint, pos, transform.rotation, transform));
     }
     void DestroyWaypoint()
     {
@@ -62,6 +63,8 @@ public class Routelogic : MonoBehaviour
     }
     void UpdateRoute(){
         lR.positionCount = routeWaypoints.Count;
+        if (routeWaypoints.Count < 2)
+            return;
         for(int i = 0; i < lR.positionCount; i++)
         {
             lR.SetPosition(i, routeWaypoints[i].transform.position);
@@ -69,6 +72,7 @@ public class Routelogic : MonoBehaviour
     }
     void RemovePoint(int index)
     {
+
         routeWaypoints.RemoveAt(index);
         UpdateRoute();
     }
