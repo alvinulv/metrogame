@@ -40,7 +40,9 @@ public class Routelogic : MonoBehaviour
             if (rWp[0] != null)
             {
                 rWp.Insert(0, null);
+                UpdateRoute();
             }
+            lR.SetPosition(0, pos);
             UpdateRoute();
         }
         if (Input.GetMouseButtonUp(1))
