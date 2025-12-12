@@ -32,7 +32,7 @@ public class Train : MonoBehaviour
             if (!reverse)
             {
                 index++;
-                if (index > Routelogic.routeWaypoints.Count)
+                if (index > Routelogic.rWp.Count)
                 {
                     if (loop)
                         index = 0;
@@ -52,7 +52,7 @@ public class Train : MonoBehaviour
                     index = 0;
                 }
             }
-            nextWaypoint = Routelogic.routeWaypoints[index].transform;
+            nextWaypoint = Routelogic.rWp[index].transform;
         }
             
         if ((nextStop.transform.position - transform.position).magnitude < mindist)
