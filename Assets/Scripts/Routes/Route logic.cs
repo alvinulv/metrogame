@@ -7,11 +7,12 @@ public class Routelogic : MonoBehaviour
 {
     LineRenderer lR;
     public List<GameObject> routeWaypoints = new List<GameObject>();
-    [SerializeField] GameObject bassPoint;
+    [SerializeField] GameObject baseWaypoint;
+    [SerializeField] bool loop;
     [Header("Debug")]
     public bool updateRoute = true;
-    public bool removenewest;
-    public bool removeOldest;
+    public bool removeFirst;
+    public bool removeLast;
     void Start()
     {
         lR = GetComponent<LineRenderer>();
@@ -39,23 +40,23 @@ public class Routelogic : MonoBehaviour
             AddRouteWaypoint(new Vector3(pos.x, pos.y, 0), 0);
             UpdateRoute();
         }
-        if (removenewest)
+        if (removeFirst)
         {
             RemovePoint(routeWaypoints.Count - 1);
-            removenewest = false;
+            removeFirst = false;
         }
-        if (removeOldest)
+        if (removeLast)
         {
             RemovePoint(0);
-            removeOldest = false;
+            removeLast = false;
         }
     }
     void AddRouteWaypoint(Vector3 pos)
     {
-        routeWaypoints.Add(Instantiate(bassPoint, pos, transform.rotation, transform));
+        routeWaypoints.Add(Instantiate(baseWaypoint, pos, transform.rotation, transform));
     }
     void AddRouteWaypoint(Vector3 pos, int index){
-        routeWaypoints.Insert(index, Instantiate(bassPoint, pos, transform.rotation, transform));
+        routeWaypoints.Insert(index, Instantiate(baseWaypoint, pos, transform.rotation, transform));
     }
     void DestroyWaypoint()
     {
@@ -68,6 +69,12 @@ public class Routelogic : MonoBehaviour
         for(int i = 0; i < lR.positionCount; i++)
         {
             lR.SetPosition(i, routeWaypoints[i].transform.position);
+        }
+        if (loop)
+        {
+            lR.positionCount++;
+            lR.SetPosition(lR.positionCount - 1, lR.GetPosition(0));
+            
         }
     }
     void RemovePoint(int index)

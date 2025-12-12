@@ -397,10 +397,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   routeWaypoints: []
-  bassPoint: {fileID: 6533094328314994640, guid: 5522553ce6d6917408e3262637c247f1, type: 3}
+  baseWaypoint: {fileID: 6533094328314994640, guid: 5522553ce6d6917408e3262637c247f1, type: 3}
+  loop: 0
   updateRoute: 1
-  removenewest: 0
-  removeOldest: 0
+  removeFirst: 0
+  removeLast: 0
 --- !u!4 &851528969
 Transform:
   m_ObjectHideFlags: 0
