@@ -9,7 +9,7 @@ public class Routelogic : MonoBehaviour
     LineRenderer lR;
     public List<Vector3> rWp = new List<Vector3>();
     [SerializeField] GameObject baseWaypoint;
-    [SerializeField] bool loop;
+    public bool isLoop;
     [Header("Debug")]
     public bool removeFirst;
     public bool removeLast;
@@ -53,6 +53,15 @@ public class Routelogic : MonoBehaviour
         {
             RemovePoint(0);
             removeLast = false;
+        }
+
+        if (rWp[0] == rWp[rWp.Count - 1])
+        {
+            isLoop = true;
+        }
+        else
+        {
+            isLoop = false;
         }
     }
     void AddRouteWaypoint(Vector3 pos)
