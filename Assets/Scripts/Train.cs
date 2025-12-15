@@ -6,28 +6,38 @@ using UnityEngine;
 
 public class Train : MonoBehaviour
 {
+    [Header("Movement")]
     [SerializeField] GameObject Route;
-    [SerializeField] Vector3 nextWaypoint;
-    [SerializeField] GameObject nextStop;
-    [SerializeField] List<GameObject> passengers = new List<GameObject>();
     Routelogic Routelogic;
-    [SerializeField] int index;
+    Vector3 nextWaypoint;
+    int index;
+    public float speed = 0.03f;
+    public float mindist = 0.1f;
+    [SerializeField] GameObject nextStop;
+    [Header("Passenger slots")]
+    [SerializeField] List<GameObject> passengers = new List<GameObject>();
+    [SerializeField] List<int> emptySlots;
     [SerializeField] int maxPassengers = 6;
-    [SerializeField] float startx = -0.4f;
-    [SerializeField] float incrementx = 0.3f;
+    [Header("Passenger distances")]
+    [SerializeField] float startx = -0.35f;
+    [SerializeField] float incrementx = 0.35f;
     [SerializeField] float starty = 0.2f;
-    [SerializeField] float incrementy = -0.3f;
+    [SerializeField] float incrementy = -0.4f;
+    [Header("Prefabs")]
     [SerializeField] GameObject squarePassenger;
     [SerializeField] GameObject circlePassenger;
     [SerializeField] GameObject trianglePassenger;
     Stations station;
     bool reverse;
-    public float speed = 0.03f;
-    public float mindist = 0.1f;
+    
     // Start is called before the first frame update
     void Start()
     {
         Routelogic = Route.GetComponent<Routelogic>();
+        for (int i = 0; i < maxPassengers; i++)
+        {
+            emptySlots.Add(i);
+        }
     }
 
     // Update is called once per frame
@@ -69,19 +79,20 @@ public class Train : MonoBehaviour
     void ReachedStop(string type)
     {
         station = nextStop.GetComponent<Stations>();
+        station.TrainIsHere = true;
         //removing passengers
         for (int i = 0; i < passengers.Count; i++)
         {
             if (passengers[i].CompareTag(type))
             {
                 Destroy(passengers[i]);
-                passengers.RemoveAt(i);
-                i--;
+                emptySlots.Add(i);
             }
         }
         //adding passengers
         for (int i = 0;i < station.people.Length;i++)
         {
+            if (emptySlots.Count > 0)
             switch (station.people[i])
             {
                 case "Square": newPassenger(squarePassenger); break;
@@ -92,40 +103,37 @@ public class Train : MonoBehaviour
             }
                 
         }
-        
+        station.TrainIsHere=false;
     }
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.CompareTag("Square"))
-        {
-            if (!passengers.Contains(collision.gameObject))
-            {
-                newPassenger(collision.gameObject);
-                /*collision.gameObject.transform.parent = transform;
-                collision.gameObject.transform.position = transform.position + new Vector3(startx + (incrementx * passengers.Count), starty, -1);
-                passengers.Add(collision.gameObject);*/
-            }
-        }
-            
         
+        {
+            if (emptySlots.Count > 0)
+                if (!passengers.Contains(collision.gameObject))
+                {
+                    newPassenger(collision.gameObject);
+                }
+        }
     }
-    bool newPassenger(GameObject passenger)
+    void newPassenger(GameObject passenger)
     {
-        if (passengers.Count >= maxPassengers)
-            return false;
+        //always check if (emptySlots.Count > 0)
         float x;
         float y;
-        if (passengers.Count >= maxPassengers/2)
+        if (emptySlots[0] >= maxPassengers / 2)
         {
             y = starty + incrementy;
-            x = startx - (incrementx*3);
+            x = startx - (incrementx * 3);
         }
         else
         {
             y = starty;
             x = startx;
         }
-        passengers.Add(Object.Instantiate(passenger, transform.position + new Vector3(x + (incrementx * passengers.Count), y, -1), transform.rotation, transform));
-        return true;
+        GameObject p = GameObject.Instantiate(passenger, transform.position + new Vector3(x + (incrementx * (emptySlots[0])), y, -1), transform.rotation);
+        p.transform.parent = transform;
+        passengers.Insert(emptySlots[0], p);
+        emptySlots.RemoveAt(0);
     }
 }

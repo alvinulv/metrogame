@@ -5,6 +5,9 @@ TagManager:
   serializedVersion: 2
   tags:
   - Square
+  - circleStation
+  - Triangle
+  - Circle
   layers:
   - Default
   - TransparentFX
