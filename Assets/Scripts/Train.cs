@@ -7,12 +7,16 @@ using UnityEngine;
 public class Train : MonoBehaviour
 {
     [SerializeField] GameObject Route;
-    [SerializeField] Transform nextWaypoint;
+    [SerializeField] Vector3 nextWaypoint;
     [SerializeField] GameObject nextStop;
     [SerializeField] List<GameObject> passengers = new List<GameObject>();
     Routelogic Routelogic;
     [SerializeField] int index;
     [SerializeField] bool loop;
+    [SerializeField] float startx = -0.4f;
+    [SerializeField] float incrementx = 0.3f;
+    [SerializeField] float starty = 0.2f;
+    [SerializeField] GameObject squarePas;
     bool reverse;
     public float speed = 0.03f;
     public float mindist = 0.1f;
@@ -25,10 +29,10 @@ public class Train : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        transform.position = transform.position + (nextWaypoint.position - transform.position).normalized * speed;
-        if ((nextWaypoint.position - transform.position).magnitude < mindist)
+        transform.position = transform.position + (nextWaypoint - transform.position).normalized * speed;
+        if ((nextWaypoint - transform.position).magnitude < mindist)
         {
-            Debug.Log("Waypoint reached");
+            //Debug.Log("Waypoint reached");
             if (!reverse)
             {
                 index++;
@@ -52,7 +56,7 @@ public class Train : MonoBehaviour
                     index = 0;
                 }
             }
-            nextWaypoint = Routelogic.rWp[index].transform;
+            nextWaypoint = Routelogic.rWp[index];
         }
             
         if ((nextStop.transform.position - transform.position).magnitude < mindist)
@@ -69,5 +73,20 @@ public class Train : MonoBehaviour
                 i--;
             }
         }
+    }
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Square"))
+        {
+            if (!passengers.Contains(collision.gameObject))
+            {
+                passengers.Add(Object.Instantiate(squarePas, new Vector3(startx + (incrementx * passengers.Count), starty, -1), transform.rotation, transform));
+                /*collision.gameObject.transform.parent = transform;
+                collision.gameObject.transform.position = transform.position + new Vector3(startx + (incrementx * passengers.Count), starty, -1);
+                passengers.Add(collision.gameObject);*/
+            }
+        }
+            
+        
     }
 }
