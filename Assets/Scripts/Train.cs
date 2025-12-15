@@ -12,11 +12,15 @@ public class Train : MonoBehaviour
     [SerializeField] List<GameObject> passengers = new List<GameObject>();
     Routelogic Routelogic;
     [SerializeField] int index;
-    [SerializeField] bool loop;
+    [SerializeField] int maxPassengers = 6;
     [SerializeField] float startx = -0.4f;
     [SerializeField] float incrementx = 0.3f;
     [SerializeField] float starty = 0.2f;
-    [SerializeField] GameObject squarePas;
+    [SerializeField] float incrementy = -0.3f;
+    [SerializeField] GameObject squarePassenger;
+    [SerializeField] GameObject circlePassenger;
+    [SerializeField] GameObject trianglePassenger;
+    Stations station;
     bool reverse;
     public float speed = 0.03f;
     public float mindist = 0.1f;
@@ -38,7 +42,7 @@ public class Train : MonoBehaviour
                 index++;
                 if (index > Routelogic.rWp.Count)
                 {
-                    if (loop)
+                    if (Routelogic.isLoop)
                         index = 0;
                     else
                     {
@@ -64,6 +68,8 @@ public class Train : MonoBehaviour
     }
     void ReachedStop(string type)
     {
+        station = nextStop.GetComponent<Stations>();
+        //removing passengers
         for (int i = 0; i < passengers.Count; i++)
         {
             if (passengers[i].CompareTag(type))
@@ -73,6 +79,20 @@ public class Train : MonoBehaviour
                 i--;
             }
         }
+        //adding passengers
+        for (int i = 0;i < station.people.Length;i++)
+        {
+            switch (station.people[i])
+            {
+                case "Square": newPassenger(squarePassenger); break;
+                case "Circle": newPassenger(circlePassenger); break;
+                case "Triangle": newPassenger(trianglePassenger); break;
+                case "null":break;
+                default: break;
+            }
+                
+        }
+        
     }
     private void OnCollisionEnter2D(Collision2D collision)
     {
@@ -80,7 +100,7 @@ public class Train : MonoBehaviour
         {
             if (!passengers.Contains(collision.gameObject))
             {
-                passengers.Add(Object.Instantiate(squarePas, new Vector3(startx + (incrementx * passengers.Count), starty, -1), transform.rotation, transform));
+                newPassenger(collision.gameObject);
                 /*collision.gameObject.transform.parent = transform;
                 collision.gameObject.transform.position = transform.position + new Vector3(startx + (incrementx * passengers.Count), starty, -1);
                 passengers.Add(collision.gameObject);*/
@@ -88,5 +108,24 @@ public class Train : MonoBehaviour
         }
             
         
+    }
+    bool newPassenger(GameObject passenger)
+    {
+        if (passengers.Count >= maxPassengers)
+            return false;
+        float x;
+        float y;
+        if (passengers.Count >= maxPassengers/2)
+        {
+            y = starty + incrementy;
+            x = startx - (incrementx*3);
+        }
+        else
+        {
+            y = starty;
+            x = startx;
+        }
+        passengers.Add(Object.Instantiate(passenger, transform.position + new Vector3(x + (incrementx * passengers.Count), y, -1), transform.rotation, transform));
+        return true;
     }
 }
