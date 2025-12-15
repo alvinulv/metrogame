@@ -26,20 +26,51 @@ public class Stations : MonoBehaviour
                     Debug.Log("new " + people[i] + " appeared");
                     timeSinceLastPerson = 0;
                     nextPersonCanSpawn = Random.Range(10, 20);
-                    transform.Find(people[i] + " (" + i + ")").GetComponent<SpriteRenderer>().enabled = true;
+                    GameObject.Find(people[i] + " (" + i + ")").GetComponent<SpriteRenderer>().enabled = true;
                     return;
                 }
 
             }
         }
-        
+        if (correctionOfPassengersListNeeded(people))
+        {
+            people = listOfPassengersUpdate(people);
+        }
         timeSinceLastPerson += Time.deltaTime * 1;
     }
-    public string[] listOfPassengersUpdate(string[] passengers)
+    bool correctionOfPassengersListNeeded(string[] passengers)
+    {
+        bool previousSeenNull = false;
+        for (int i = 0; i < passengers.Length; i++)
+        {
+            if (passengers[i] == "null")
+            {
+                previousSeenNull = true;
+            }
+            else if (previousSeenNull)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+    string[] listOfPassengersUpdate(string[] passengers)
     {
         for (int i = 0; i < passengers.Length-1; i++)
         {
-            passengers[i] = passengers[i+1];
+            if (passengers[i] == "null" && passengers[i + 1] != "null")
+            {
+                passengers[i] = passengers[i + 1];
+                passengers[i + 1] = "null";
+            }
+        }
+        for (int i = 0; i < passengers.Length; i++)
+        {
+                transform.Find("Circle (" + i + ")").GetComponent<SpriteRenderer>().enabled = false;
+                transform.Find("Square (" + i + ")").GetComponent<SpriteRenderer>().enabled = false;
+                transform.Find("Triangle (" + i + ")").GetComponent<SpriteRenderer>().enabled = false;
+            if (passengers[i] != "null") transform.Find(passengers[i] + " (" + i + ")").GetComponent<SpriteRenderer>().enabled = true;
+
         }
         return passengers;
     }
