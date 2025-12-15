@@ -11,18 +11,15 @@ public class Routelogic : MonoBehaviour
     [SerializeField] GameObject baseWaypoint;
     [SerializeField] bool loop;
     [Header("Debug")]
-    public bool updateRoute = true;
     public bool removeFirst;
     public bool removeLast;
     void Start()
     {
         lR = GetComponent<LineRenderer>();
     }
-
-    // Update is called once per frame
     void Update()
     {
-        if (Input.GetMouseButtonUp(0))
+        if (Input.GetMouseButtonDown(0))
         {
             Vector3 p = Input.mousePosition;
             Vector3 pos = Camera.main.ScreenToWorldPoint(p);
@@ -34,7 +31,7 @@ public class Routelogic : MonoBehaviour
             Vector3 pos = Camera.main.ScreenToWorldPoint(p);
             ChangePos(rWp.Count - 1, RoundedVector(pos));
         }
-        if (Input.GetMouseButtonUp(1))
+        if (Input.GetMouseButtonDown(1))
         {
             Vector3 p = Input.mousePosition;
             Vector3 pos = Camera.main.ScreenToWorldPoint(p);
@@ -46,6 +43,7 @@ public class Routelogic : MonoBehaviour
             Vector3 pos = Camera.main.ScreenToWorldPoint(p);
             ChangePos(0, RoundedVector(pos));
         }
+
         if (removeFirst)
         {
             RemovePoint(rWp.Count - 1);
@@ -65,7 +63,14 @@ public class Routelogic : MonoBehaviour
     }
     void AddRouteWaypoint(Vector3 pos, int index)
     {
-        rWp.Insert(index, pos);
+        if (rWp.Count < 2)
+        {
+            AddRouteWaypoint(pos);
+        }
+        else
+        {
+            rWp.Insert(index, pos);
+        }
         lR.positionCount = rWp.Count;
         lR.SetPositions(rWp.ToArray());
     }
