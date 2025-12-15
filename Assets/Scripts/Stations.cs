@@ -27,7 +27,7 @@ public class Stations : MonoBehaviour
                     Debug.Log("new " + people[i] + " appeared");
                     timeSinceLastPerson = 0;
                     nextPersonCanSpawn = Random.Range(10, 20);
-                    GameObject.Find(people[i] + " (" + i + ")").GetComponent<SpriteRenderer>().enabled = true;
+                    transform.Find(people[i] + " (" + i + ")").GetComponent<SpriteRenderer>().enabled = true;
                     return;
                 }
 
