@@ -7,6 +7,7 @@ public class Stations : MonoBehaviour
     public string[] people = { "null", "null", "null", "null", "null" };
     float timeSinceLastPerson = 10;
     int nextPersonCanSpawn = 15;
+    public bool TrainIsHere = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -32,7 +33,7 @@ public class Stations : MonoBehaviour
 
             }
         }
-        if (correctionOfPassengersListNeeded(people))
+        if (correctionOfPassengersListNeeded(people) && !TrainIsHere)
         {
             people = listOfPassengersUpdate(people);
         }
