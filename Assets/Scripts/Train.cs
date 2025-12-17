@@ -6,13 +6,14 @@ using UnityEngine;
 
 public class Train : MonoBehaviour
 {
+    //Object.Instantiate(train).GetComponent<Train>().Route =
     [Header("Movement")]
-    [SerializeField] GameObject Route;
+    public GameObject Route;
     Routelogic Routelogic;
     Vector3 nextWaypoint;
     int index;
-    public float speed = 0.03f;
-    public float mindist = 0.1f;
+    [SerializeField] float speed = 0.03f;
+    [SerializeField] float mindist = 0.1f;
     [SerializeField] GameObject nextStop;
     [Header("Passenger slots")]
     [SerializeField] List<GameObject> passengers = new List<GameObject>();
@@ -131,7 +132,7 @@ public class Train : MonoBehaviour
             y = starty;
             x = startx;
         }
-        GameObject p = GameObject.Instantiate(passenger, transform.position + new Vector3(x + (incrementx * (emptySlots[0])), y, -1), transform.rotation);
+        GameObject p = Object.Instantiate(passenger, transform.position + new Vector3(x + (incrementx * (emptySlots[0])), y, -1), transform.rotation);
         p.transform.parent = transform;
         passengers.Insert(emptySlots[0], p);
         emptySlots.RemoveAt(0);
