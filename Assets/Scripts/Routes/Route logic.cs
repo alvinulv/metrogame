@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using static UnityEditor.Progress;
 
 public class Routelogic : MonoBehaviour
 {
@@ -34,13 +35,12 @@ public class Routelogic : MonoBehaviour
             if (hit.collider != null && rWp.Count > 0 && (hit.transform.position - rWp[rWp.Count-1]).magnitude < clickerRadius)
             {
                 clicking = true;
-                if (rWp.Count == 0) AddRouteWaypoint(hit.transform.position);
                 AddRouteWaypoint(hit.transform.position, true);
                 lR.SetPositions(rWp.ToArray());
             } else if (hit.collider != null && rWp.Count == 0)
             {
                 clicking = true;
-                if (rWp.Count == 0) AddRouteWaypoint(hit.transform.position);
+                AddRouteWaypoint(hit.transform.position);
                 AddRouteWaypoint(hit.transform.position, true);
                 lR.SetPositions(rWp.ToArray());
             }
@@ -49,12 +49,19 @@ public class Routelogic : MonoBehaviour
         if (clicking && Input.GetMouseButton(0))
         {
             if(rWp.Count > 0) ChangePos(rWp.Count - 1, RoundedVector(pos));
+            int _temp = 0;
+            foreach (Vector3 wP in rWp)
+            {
+                if (wP == rWp[rWp.Count - 1])
+                    _temp++;
+            }
+            if (_temp > 1) ChangePos(rWp.Count - 1, rWp[rWp.Count -2]);
         }
         if (Input.GetMouseButtonUp(0))
         {
             clicking = false;
             Vector3 _temp = rWp[rWp.Count-1];
-            rWp.Remove(_temp);
+            rWp.RemoveAt(rWp.Count - 1);
             if (rWp.Count > 0 && !rWp.Contains(_temp))
             {
                 rWp.Add(_temp);
