@@ -16,8 +16,8 @@ public class Train : MonoBehaviour
     [SerializeField] float mindist = 0.1f;
     [SerializeField] GameObject nextStop;
     [Header("Passenger slots")]
-    [SerializeField] List<GameObject> passengers = new List<GameObject>();
-    [SerializeField] List<int> emptySlots;
+    [SerializeField] GameObject[] passengers;
+    //[SerializeField] bool[] emptySlots;
     [SerializeField] int maxPassengers = 6;
     [Header("Passenger distances")]
     [SerializeField] float startx = -0.35f;
@@ -30,15 +30,16 @@ public class Train : MonoBehaviour
     [SerializeField] GameObject trianglePassenger;
     Stations station;
     bool reverse;
+    //List<int> removed;
     
     // Start is called before the first frame update
     void Start()
     {
         Routelogic = Route.GetComponent<Routelogic>();
-        for (int i = 0; i < maxPassengers; i++)
+        /*for (int i = 0; i < maxPassengers; i++)
         {
-            emptySlots.Add(i);
-        }
+            passengers.Add(null);
+        }*/
     }
 
     // Update is called once per frame
@@ -82,27 +83,34 @@ public class Train : MonoBehaviour
         station = nextStop.GetComponent<Stations>();
         station.TrainIsHere = true;
         //removing passengers
-        for (int i = 0; i < passengers.Count; i++)
+        for (int i = 0; i < passengers.Length;i++)
         {
-            if (passengers[i].CompareTag(type))
+            if (passengers[i] != null)
             {
-                Destroy(passengers[i]);
-                emptySlots.Add(i);
+                if (passengers[i].CompareTag(type))
+                {
+                    Destroy(passengers[i]);
+                    //[i] = true;
+                    passengers[i].transform.position = transform.position + new Vector3(startx + (incrementx * (i)), starty, -1);
+                }
+                
             }
+
         }
         //adding passengers
         for (int i = 0;i < station.people.Length;i++)
         {
-            if (emptySlots.Count > 0)
+            for (int j = 0;j <passengers.Length;j++)
+                if (passengers[j] == null)
             switch (station.people[i])
             {
-                case "Square": newPassenger(squarePassenger); break;
-                case "Circle": newPassenger(circlePassenger); break;
-                case "Triangle": newPassenger(trianglePassenger); break;
-                case "null":break;
+                case "null": break;
+                case "Square": newPassenger(squarePassenger,i,j);break;
+                case "Circle": newPassenger(circlePassenger,i,j); break;
+                case "Triangle": newPassenger(trianglePassenger,i,j); break;
                 default: break;
             }
-                
+            station.people = station.listOfPassengersUpdate(station.people);
         }
         station.TrainIsHere=false;
     }
@@ -110,19 +118,25 @@ public class Train : MonoBehaviour
     {
         
         {
-            if (emptySlots.Count > 0)
+            /*if (emptySlots.Count > 0)
                 if (!passengers.Contains(collision.gameObject))
                 {
                     newPassenger(collision.gameObject);
-                }
+                }*/
         }
+        if (collision.gameObject.layer ==6)
+        {
+            nextStop = collision.gameObject;
+            ReachedStop(collision.gameObject.tag);
+        }
+       
     }
-    void newPassenger(GameObject passenger)
+    void newPassenger(GameObject passenger, int stationSlot, int carSlot)
     {
         //always check if (emptySlots.Count > 0)
         float x;
         float y;
-        if (emptySlots[0] >= maxPassengers / 2)
+        if (carSlot >= maxPassengers / 2)
         {
             y = starty + incrementy;
             x = startx - (incrementx * 3);
@@ -132,9 +146,12 @@ public class Train : MonoBehaviour
             y = starty;
             x = startx;
         }
-        GameObject p = Object.Instantiate(passenger, transform.position + new Vector3(x + (incrementx * (emptySlots[0])), y, -1), transform.rotation);
+        GameObject p = Object.Instantiate(passenger, transform.position + new Vector3(x + (incrementx * (carSlot)), y, -1), transform.rotation);
         p.transform.parent = transform;
-        passengers.Insert(emptySlots[0], p);
-        emptySlots.RemoveAt(0);
+        passengers[carSlot] = p;
+        //emptySlots[carSlot] = false;
+        station.people[stationSlot] = "null";
+
+        
     }
 }
