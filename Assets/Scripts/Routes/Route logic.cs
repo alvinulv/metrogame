@@ -30,13 +30,21 @@ public class Routelogic : MonoBehaviour
         //-------------------------------
         if (Input.GetMouseButtonDown(0) && hit && !clicking)
         {
-            if (hit.collider != null)
+            
+            if (hit.collider != null && rWp.Count > 0 && (hit.transform.position - rWp[rWp.Count-1]).magnitude < clickerRadius)
             {
                 clicking = true;
-                if (rWp.Count == 0) AddRouteWaypoint(RoundedVector(pos));
-                AddRouteWaypoint(RoundedVector(pos));
+                if (rWp.Count == 0) AddRouteWaypoint(hit.transform.position);
+                AddRouteWaypoint(hit.transform.position, true);
+                lR.SetPositions(rWp.ToArray());
+            } else if (hit.collider != null && rWp.Count == 0)
+            {
+                clicking = true;
+                if (rWp.Count == 0) AddRouteWaypoint(hit.transform.position);
+                AddRouteWaypoint(hit.transform.position, true);
+                lR.SetPositions(rWp.ToArray());
             }
-            lR.SetPositions(rWp.ToArray());
+            
         }
         if (clicking && Input.GetMouseButton(0))
         {
@@ -45,6 +53,12 @@ public class Routelogic : MonoBehaviour
         if (Input.GetMouseButtonUp(0))
         {
             clicking = false;
+            Vector3 _temp = rWp[rWp.Count-1];
+            rWp.Remove(_temp);
+            if (rWp.Count > 0 && !rWp.Contains(_temp))
+            {
+                rWp.Add(_temp);
+            }
             if (hit.collider == null)
             {
                 rWp.Clear();
@@ -104,12 +118,20 @@ public class Routelogic : MonoBehaviour
     }
     void AddRouteWaypoint(Vector3 pos)
     {
+        if (rWp.Contains(pos))
+        {
+            return;
+        }
         rWp.Add(pos);
         lR.positionCount = rWp.Count;
         lR.SetPositions(rWp.ToArray());
     }
     void AddRouteWaypoint(Vector3 pos, int index)
     {
+        if (rWp.Contains(pos))
+        {
+            return;
+        }
         if (rWp.Count < 2)
         {
             AddRouteWaypoint(pos);
@@ -121,6 +143,13 @@ public class Routelogic : MonoBehaviour
         lR.positionCount = rWp.Count;
         lR.SetPositions(rWp.ToArray());
     }
+    void AddRouteWaypoint(Vector3 pos, bool _override)
+    {
+        rWp.Add(pos);
+        lR.positionCount = rWp.Count;
+        lR.SetPositions(rWp.ToArray());
+    }
+
     void RemovePoint(int index)
     {
         rWp.RemoveAt(index);
