@@ -80,9 +80,9 @@ public class Stations : MonoBehaviour
         int j = Random.Range(1, 4);
         switch (j)
         {
-            case 1: if (transform.CompareTag("circleStation")) { return whatPersonShouldSpawn(); } return "Circle";
-            case 2: if (transform.CompareTag("triangleStation")) { return whatPersonShouldSpawn(); } return "Triangle";
-            case 3: if (transform.CompareTag("squareStation")) { return whatPersonShouldSpawn(); } return "Square";
+            case 1: if (transform.CompareTag("Circle")) { return whatPersonShouldSpawn(); } return "Circle";
+            case 2: if (transform.CompareTag("Triangle")) { return whatPersonShouldSpawn(); } return "Triangle";
+            case 3: if (transform.CompareTag("Square")) { return whatPersonShouldSpawn(); } return "Square";
             default: return "null";
         }
     }
