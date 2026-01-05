@@ -25,37 +25,50 @@ public class Routelogic : MonoBehaviour
     {
         Vector3 p = Input.mousePosition;
         Vector3 pos = Camera.main.ScreenToWorldPoint(p);
-        hit = Physics2D.CircleCast(new Vector2(pos.x, pos.y), clickerRadius, Vector2.right,0.1f,stationLayer);
+        hit = Physics2D.CircleCast(new Vector2(pos.x, pos.y), clickerRadius, Vector2.right,0f,stationLayer);
         Debug.Log(hit.collider);
+        //-------------------------------
         if (Input.GetMouseButtonDown(0) && hit && !clicking)
         {
-            clicking = true;
-            rWp.Clear();
-            AddRouteWaypoint(RoundedVector(pos));
-            AddRouteWaypoint(RoundedVector(pos));
+            if (hit.collider != null)
+            {
+                clicking = true;
+                if (rWp.Count == 0) AddRouteWaypoint(RoundedVector(pos));
+                AddRouteWaypoint(RoundedVector(pos));
+            }
+            lR.SetPositions(rWp.ToArray());
         }
-        if (Input.GetMouseButton(0))
+        if (clicking && Input.GetMouseButton(0))
         {
-            ChangePos(rWp.Count - 1, RoundedVector(pos));
+            if(rWp.Count > 0) ChangePos(rWp.Count - 1, RoundedVector(pos));
         }
         if (Input.GetMouseButtonUp(0))
         {
             clicking = false;
             if (hit.collider == null)
+            {
                 rWp.Clear();
+            }
             lR.SetPositions(rWp.ToArray());
+            if(rWp.Count == 0)
+            {
+                lR.positionCount = 0;
+            }
         }
-
+        //----------------------------
         if (Input.GetMouseButtonDown(1) && hit && !clicking)
         {
-            clicking = true;
-            rWp.Clear();
-            AddRouteWaypoint(RoundedVector(pos), 0);
-            AddRouteWaypoint(RoundedVector(pos), 0);
+            if (hit.collider != null)
+            {
+                clicking = true;
+                AddRouteWaypoint(RoundedVector(pos));
+                AddRouteWaypoint(RoundedVector(pos));
+            }
+            lR.SetPositions(rWp.ToArray());
         }
-        if (Input.GetMouseButton(1))
+        if (clicking && Input.GetMouseButton(1))
         {
-            ChangePos(0, RoundedVector(pos));
+            if (rWp.Count > 0) ChangePos(0, RoundedVector(pos));
         }
         if (Input.GetMouseButtonUp(1))
         {
@@ -63,8 +76,12 @@ public class Routelogic : MonoBehaviour
             if (hit.collider == null)
                 rWp.Clear();
             lR.SetPositions(rWp.ToArray());
+            if (rWp.Count == 0)
+            {
+                lR.positionCount = 0;
+            }
         }
-        
+        //------------------------------
         if (removeFirst)
         {
             RemovePoint(rWp.Count - 1);
