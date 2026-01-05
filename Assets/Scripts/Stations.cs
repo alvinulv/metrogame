@@ -55,7 +55,7 @@ public class Stations : MonoBehaviour
         }
         return false;
     }
-    string[] listOfPassengersUpdate(string[] passengers)
+    public string[] listOfPassengersUpdate(string[] passengers)
     {
         for (int i = 0; i < passengers.Length-1; i++)
         {
