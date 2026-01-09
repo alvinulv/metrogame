@@ -7,6 +7,7 @@ using static UnityEditor.Progress;
 
 public class Routelogic : MonoBehaviour
 {
+    int currentIndex = -1;
     [SerializeField] float clickerRadius = 0.5f;
     [SerializeField] LayerMask stationLayer;
     public RaycastHit2D hit;
@@ -37,7 +38,7 @@ public class Routelogic : MonoBehaviour
                 clicking = true;
                 AddRouteWaypoint(hit.transform.position, true);
                 lR.SetPositions(rWp.ToArray());
-            } else if (hit.collider != null && rWp.Count == 0)
+            } else if (hit.collider != null && rWp.Count == 0)//First waypoint
             {
                 clicking = true;
                 AddRouteWaypoint(hit.transform.position);
@@ -79,28 +80,29 @@ public class Routelogic : MonoBehaviour
         //----------------------------
         if (Input.GetMouseButtonDown(1) && hit && !clicking)
         {
-            if (hit.collider != null)
+            clicking = true;
+            Debug.Log(RoundedVector(pos));
+            if (rWp.Contains(RoundedVector(pos)))
             {
-                clicking = true;
-                AddRouteWaypoint(RoundedVector(pos));
-                AddRouteWaypoint(RoundedVector(pos));
+                Debug.Log("AAAAAAAAAAAHHHHHHHHHH!!!!!!!!!!!!");
+                currentIndex = rWp.IndexOf(RoundedVector(pos));
             }
-            lR.SetPositions(rWp.ToArray());
         }
         if (clicking && Input.GetMouseButton(1))
         {
-            if (rWp.Count > 0) ChangePos(0, RoundedVector(pos));
+            Debug.Log("currentIndex: "+currentIndex);
+            if (rWp.Count > 0) ChangePos(currentIndex, RoundedVector(pos));
+            int _temp = 0;
+            foreach (Vector3 wP in rWp)
+            {
+                if (wP == rWp[rWp.Count - 1])
+                    _temp++;
+            }
+            if (_temp > 1) ChangePos(currentIndex, rWp[rWp.Count - 2]);
         }
         if (Input.GetMouseButtonUp(1))
         {
             clicking = false;
-            if (hit.collider == null)
-                rWp.Clear();
-            lR.SetPositions(rWp.ToArray());
-            if (rWp.Count == 0)
-            {
-                lR.positionCount = 0;
-            }
         }
         //------------------------------
         if (removeFirst)
