@@ -30,6 +30,7 @@ public class Train : MonoBehaviour
     [SerializeField] GameObject trianglePassenger;
     Stations station;
     bool reverse;
+    int stopped;
     //List<int> removed;
     
     // Start is called before the first frame update
@@ -45,41 +46,47 @@ public class Train : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        transform.position = transform.position + (nextWaypoint - transform.position).normalized * speed;
-        if ((nextWaypoint - transform.position).magnitude < mindist)
+        if (stopped <= 0)
         {
-            //Debug.Log("Waypoint reached");
-            if (!reverse)
+            transform.position = transform.position + (nextWaypoint - transform.position).normalized * speed;
+            if ((nextWaypoint - transform.position).magnitude < mindist)
             {
-                index++;
-                if (index > Routelogic.rWp.Count)
+                //Debug.Log("Waypoint reached");
+                if (!reverse)
                 {
-                    if (Routelogic.isLoop)
-                        index = 0;
-                    else
+                    index++;
+                    if (index > Routelogic.rWp.Count)
                     {
-                        reverse = true;
-                        index--;
+                        if (Routelogic.isLoop)
+                            index = 0;
+                        else
+                        {
+                            reverse = true;
+                            index--;
+                        }
                     }
                 }
-            }
-            else
-            {
-                index--;
-                if (index < 0)
+                else
                 {
-                    reverse = false;
-                    index = 0;
+                    index--;
+                    if (index < 0)
+                    {
+                        reverse = false;
+                        index = 0;
+                    }
                 }
+                nextWaypoint = Routelogic.rWp[index];
             }
-            nextWaypoint = Routelogic.rWp[index];
+
+            if ((nextStop.transform.position - transform.position).magnitude < mindist)
+                ReachedStop(nextStop.tag);
         }
-            
-        if ((nextStop.transform.position - transform.position).magnitude < mindist)
-            ReachedStop(nextStop.tag);
+        else stopped--;
     }
+        
     void ReachedStop(string type)
     {
+        stopped = 100;
         station = nextStop.GetComponent<Stations>();
         station.TrainIsHere = true;
         //removing passengers
@@ -90,10 +97,8 @@ public class Train : MonoBehaviour
                 if (passengers[i].CompareTag(type))
                 {
                     Destroy(passengers[i]);
-                    //[i] = true;
                     passengers[i].transform.position = transform.position + new Vector3(startx + (incrementx * (i)), starty, -1);
                 }
-                
             }
 
         }
