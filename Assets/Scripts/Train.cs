@@ -14,7 +14,6 @@ public class Train : MonoBehaviour
     int index;
     [SerializeField] float speed = 0.03f;
     [SerializeField] float mindist = 0.1f;
-    [SerializeField] GameObject nextStop;
     [Header("Passenger slots")]
     [SerializeField] GameObject[] passengers;
     //[SerializeField] bool[] emptySlots;
@@ -28,6 +27,7 @@ public class Train : MonoBehaviour
     [SerializeField] GameObject squarePassenger;
     [SerializeField] GameObject circlePassenger;
     [SerializeField] GameObject trianglePassenger;
+    GameObject lastStop;
     Stations station;
     bool reverse;
     int stopped;
@@ -46,12 +46,13 @@ public class Train : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //Moving the train along the route
         if (stopped <= 0)
         {
             transform.position = transform.position + (nextWaypoint - transform.position).normalized * speed;
             if ((nextWaypoint - transform.position).magnitude < mindist)
             {
-                //Debug.Log("Waypoint reached");
+                //Runs when a waypoint is reached
                 if (!reverse)
                 {
                     index++;
@@ -78,23 +79,24 @@ public class Train : MonoBehaviour
                 nextWaypoint = Routelogic.rWp[index];
             }
 
-            if ((nextStop.transform.position - transform.position).magnitude < mindist)
-                ReachedStop(nextStop.tag);
+            /*if ((nextStop.transform.position - transform.position).magnitude < mindist)
+                ReachedStop(nextStop);*/
         }
         else stopped--;
     }
         
-    void ReachedStop(string type)
+    void ReachedStop(GameObject stop)
     {
+        if (stop != lastStop)
         stopped = 100;
-        station = nextStop.GetComponent<Stations>();
+        station = stop.GetComponent<Stations>();
         station.TrainIsHere = true;
         //removing passengers
         for (int i = 0; i < passengers.Length;i++)
         {
             if (passengers[i] != null)
             {
-                if (passengers[i].CompareTag(type))
+                if (passengers[i].CompareTag(stop.tag))
                 {
                     Destroy(passengers[i]);
                     passengers[i].transform.position = transform.position + new Vector3(startx + (incrementx * (i)), starty, -1);
@@ -118,6 +120,7 @@ public class Train : MonoBehaviour
             station.people = station.listOfPassengersUpdate(station.people);
         }
         station.TrainIsHere=false;
+        lastStop = stop;
     }
     private void OnCollisionEnter2D(Collision2D collision)
     {
@@ -131,8 +134,7 @@ public class Train : MonoBehaviour
         }
         if (collision.gameObject.layer ==6)
         {
-            nextStop = collision.gameObject;
-            ReachedStop(collision.gameObject.tag);
+            ReachedStop(collision.gameObject);
         }
        
     }
