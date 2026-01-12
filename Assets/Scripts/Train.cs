@@ -98,6 +98,7 @@ public class Train : MonoBehaviour
                 if (passengers[i].CompareTag(stop.tag))
                 {
                     Destroy(passengers[i]);
+                    passengers[i] = null;
                     passengers[i].transform.position = transform.position + new Vector3(startx + (incrementx * (i)), starty, -1);
                 }
             }
