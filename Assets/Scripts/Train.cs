@@ -7,6 +7,7 @@ using UnityEngine;
 public class Train : MonoBehaviour
 {
     //Object.Instantiate(train).GetComponent<Train>().Route =
+    GameObject lastStop;
     [Header("Movement")]
     public GameObject Route;
     Routelogic Routelogic;
@@ -16,7 +17,6 @@ public class Train : MonoBehaviour
     [SerializeField] float mindist = 0.1f;
     [Header("Passenger slots")]
     [SerializeField] GameObject[] passengers;
-    //[SerializeField] bool[] emptySlots;
     [SerializeField] int maxPassengers = 6;
     [Header("Passenger distances")]
     [SerializeField] float startx = -0.35f;
@@ -27,8 +27,8 @@ public class Train : MonoBehaviour
     [SerializeField] GameObject squarePassenger;
     [SerializeField] GameObject circlePassenger;
     [SerializeField] GameObject trianglePassenger;
-    GameObject lastStop;
-    Stations station;
+    
+    
     bool reverse;
     int stopped;
     //List<int> removed;
@@ -89,8 +89,7 @@ public class Train : MonoBehaviour
     {
         if (stop != lastStop)
         stopped = 100;
-        station = stop.GetComponent<Stations>();
-        station.TrainIsHere = true;
+        Stations station = stop.GetComponent<Stations>();
         //removing passengers
         for (int i = 0; i < passengers.Length;i++)
         {
@@ -108,18 +107,22 @@ public class Train : MonoBehaviour
         for (int i = 0;i < station.people.Length;i++)
         {
             for (int j = 0;j <passengers.Length;j++)
-                if (passengers[j] == null)
-            switch (station.people[i])
             {
-                case "null": break;
-                case "Square": newPassenger(squarePassenger,i,j);break;
-                case "Circle": newPassenger(circlePassenger,i,j); break;
-                case "Triangle": newPassenger(trianglePassenger,i,j); break;
-                default: break;
+                if (passengers[j] == null)
+                {
+                    switch (station.people[i])
+                    {
+                        case "null": break;
+                        case "Square": newPassenger(squarePassenger, i, j, station); break;
+                        case "Circle": newPassenger(circlePassenger, i, j, station); break;
+                        case "Triangle": newPassenger(trianglePassenger, i, j, station); break;
+                        default: break;
+                    }
+                    
+                }
             }
-            station.people = station.listOfPassengersUpdate(station.people);
         }
-        station.TrainIsHere=false;
+        station.people = station.listOfPassengersUpdate(station.people);
         lastStop = stop;
     }
     private void OnCollisionEnter2D(Collision2D collision)
@@ -138,9 +141,8 @@ public class Train : MonoBehaviour
         }
        
     }
-    void newPassenger(GameObject passenger, int stationSlot, int carSlot)
+    void newPassenger(GameObject passenger, int stationSlot, int carSlot, Stations station)
     {
-        //always check if (emptySlots.Count > 0)
         float x;
         float y;
         if (carSlot >= maxPassengers / 2)
@@ -156,9 +158,6 @@ public class Train : MonoBehaviour
         GameObject p = Object.Instantiate(passenger, transform.position + new Vector3(x + (incrementx * (carSlot)), y, -1), transform.rotation);
         p.transform.parent = transform;
         passengers[carSlot] = p;
-        //emptySlots[carSlot] = false;
         station.people[stationSlot] = "null";
-
-        
     }
 }
