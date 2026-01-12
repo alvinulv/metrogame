@@ -90,7 +90,7 @@ public class Routelogic : MonoBehaviour
         }
         if (clicking && Input.GetMouseButton(1))
         {
-            Debug.Log("currentIndex: "+currentIndex);
+            Debug.Log("currentIndex: " + currentIndex);
             if (rWp.Count > 0) ChangePos(currentIndex, RoundedVector(pos));
             int _temp = 0;
             foreach (Vector3 wP in rWp)
@@ -103,19 +103,19 @@ public class Routelogic : MonoBehaviour
         if (Input.GetMouseButtonUp(1))
         {
             clicking = false;
+            Vector3 _temp = rWp[currentIndex];
+            rWp.RemoveAt(currentIndex);
+            if (rWp.Count > 0 && !rWp.Contains(_temp) && hit.collider == null)
+            {
+                rWp.Add(_temp);
+            }
+            lR.SetPositions(rWp.ToArray());
+            if (rWp.Count == 0)
+            {
+                lR.positionCount = 0;
+            }
         }
         //------------------------------
-        if (removeFirst)
-        {
-            RemovePoint(rWp.Count - 1);
-            removeFirst = false;
-        }
-        if (removeLast)
-        {
-            RemovePoint(0);
-            removeLast = false;
-        }
-
         if (rWp.Count > 1 && rWp[0] == rWp[rWp.Count - 1])
         {
             isLoop = true;
