@@ -348,6 +348,7 @@ GameObject:
   - component: {fileID: 3102571088446234307}
   - component: {fileID: 5223782592385199490}
   - component: {fileID: 8016958470679723832}
+  - component: {fileID: 3696640313692101524}
   m_Layer: 6
   m_Name: squareStation
   m_TagString: Square
@@ -456,7 +457,6 @@ MonoBehaviour:
   - null
   - null
   - null
-  TrainIsHere: 0
 --- !u!61 &8016958470679723832
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -502,6 +502,33 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.75, y: 0.75}
   m_EdgeRadius: 0
+--- !u!50 &3696640313692101524
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2186161368206073949}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 7
 --- !u!1 &2497979294022723871
 GameObject:
   m_ObjectHideFlags: 0

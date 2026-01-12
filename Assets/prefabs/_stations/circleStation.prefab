@@ -1104,6 +1104,7 @@ GameObject:
   - component: {fileID: 6119636893354712939}
   - component: {fileID: 4494393126799994180}
   - component: {fileID: 5470947432191175907}
+  - component: {fileID: 2044292933078028940}
   m_Layer: 6
   m_Name: circleStation
   m_TagString: Circle
@@ -1212,7 +1213,6 @@ MonoBehaviour:
   - null
   - null
   - null
-  TrainIsHere: 0
 --- !u!61 &5470947432191175907
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1258,6 +1258,33 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.75, y: 0.75}
   m_EdgeRadius: 0
+--- !u!50 &2044292933078028940
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8324163087160365532}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 7
 --- !u!1 &8942114084624707534
 GameObject:
   m_ObjectHideFlags: 0
