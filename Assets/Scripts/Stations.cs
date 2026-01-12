@@ -5,9 +5,9 @@ using UnityEngine;
 public class Stations : MonoBehaviour
 {
     public string[] people = { "null", "null", "null", "null", "null" };
+    string[] possiblePeople = { "Circle", "Triangle", "Square" };
     float timeSinceLastPerson = 10;
     int nextPersonCanSpawn = 15;
-    public bool TrainIsHere = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -33,7 +33,7 @@ public class Stations : MonoBehaviour
 
             }
         }
-        if (correctionOfPassengersListNeeded(people) && !TrainIsHere)
+        if (correctionOfPassengersListNeeded(people) || correctionOfVisiblePassengersListNeeded(people))
         {
             people = listOfPassengersUpdate(people);
         }
@@ -55,6 +55,21 @@ public class Stations : MonoBehaviour
         }
         return false;
     }
+    bool correctionOfVisiblePassengersListNeeded(string[] passengers)
+    {
+        for (int i = 0;i < passengers.Length;i++)
+        {
+            if (passengers[i] == "null")
+            {
+                for (int j = 0; j < 3; j++)
+                {
+                    if (transform.Find(possiblePeople[j] + " (" + i + ")").GetComponent<SpriteRenderer>().enabled == true) return true;
+                }
+            }
+            else if (transform.Find(passengers[i] + " (" + i + ")").GetComponent<SpriteRenderer>().enabled == false) return true;
+        }
+        return false;
+    }
     public string[] listOfPassengersUpdate(string[] passengers)
     {
         for (int i = 0; i < passengers.Length-1; i++)
@@ -67,9 +82,10 @@ public class Stations : MonoBehaviour
         }
         for (int i = 0; i < passengers.Length; i++)
         {
-                transform.Find("Circle (" + i + ")").GetComponent<SpriteRenderer>().enabled = false;
-                transform.Find("Square (" + i + ")").GetComponent<SpriteRenderer>().enabled = false;
-                transform.Find("Triangle (" + i + ")").GetComponent<SpriteRenderer>().enabled = false;
+            for(int j = 0; j < 3; j++)
+            {
+                transform.Find(possiblePeople[j] + " (" + i + ")").GetComponent<SpriteRenderer>().enabled = false;
+            }   
             if (passengers[i] != "null") transform.Find(passengers[i] + " (" + i + ")").GetComponent<SpriteRenderer>().enabled = true;
 
         }
@@ -78,12 +94,7 @@ public class Stations : MonoBehaviour
     string whatPersonShouldSpawn()
     {
         int j = Random.Range(1, 4);
-        switch (j)
-        {
-            case 1: if (transform.CompareTag("Circle")) { return whatPersonShouldSpawn(); } return "Circle";
-            case 2: if (transform.CompareTag("Triangle")) { return whatPersonShouldSpawn(); } return "Triangle";
-            case 3: if (transform.CompareTag("Square")) { return whatPersonShouldSpawn(); } return "Square";
-            default: return "null";
-        }
+        if (transform.CompareTag(possiblePeople[j])) { return whatPersonShouldSpawn(); }
+        return possiblePeople[j];
     }
 }
