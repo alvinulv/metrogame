@@ -180,7 +180,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Advertisement
+  m_text: '
 
 '
   m_isRightToLeft: 0
@@ -209,8 +209,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 22
-  m_fontSizeBase: 22
+  m_fontSize: 20
+  m_fontSizeBase: 20
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -316,7 +316,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Faster Trains
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -343,8 +343,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 22
-  m_fontSizeBase: 22
+  m_fontSize: 20
+  m_fontSizeBase: 20
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -716,7 +716,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: More Routes
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -743,8 +743,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 22
-  m_fontSizeBase: 22
+  m_fontSize: 20
+  m_fontSizeBase: 20
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -1187,7 +1187,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'More Trains
+  m_text: '
 
 '
   m_isRightToLeft: 0
@@ -1216,8 +1216,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 22
-  m_fontSizeBase: 22
+  m_fontSize: 20
+  m_fontSizeBase: 20
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -1403,63 +1403,6 @@ MonoBehaviour:
     mipBias: 0
     varianceClampScale: 0.9
     contrastAdaptiveSharpening: 0
---- !u!1001 &1231353103
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 2149883715720716018, guid: cdfebcd3c7ad93048ba3d48cc0e14d9a, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -12.563014
-      objectReference: {fileID: 0}
-    - target: {fileID: 2149883715720716018, guid: cdfebcd3c7ad93048ba3d48cc0e14d9a, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -2.400378
-      objectReference: {fileID: 0}
-    - target: {fileID: 2149883715720716018, guid: cdfebcd3c7ad93048ba3d48cc0e14d9a, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2149883715720716018, guid: cdfebcd3c7ad93048ba3d48cc0e14d9a, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2149883715720716018, guid: cdfebcd3c7ad93048ba3d48cc0e14d9a, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2149883715720716018, guid: cdfebcd3c7ad93048ba3d48cc0e14d9a, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2149883715720716018, guid: cdfebcd3c7ad93048ba3d48cc0e14d9a, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2149883715720716018, guid: cdfebcd3c7ad93048ba3d48cc0e14d9a, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2149883715720716018, guid: cdfebcd3c7ad93048ba3d48cc0e14d9a, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2149883715720716018, guid: cdfebcd3c7ad93048ba3d48cc0e14d9a, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8324163087160365532, guid: cdfebcd3c7ad93048ba3d48cc0e14d9a, type: 3}
-      propertyPath: m_Name
-      value: circleStation
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: cdfebcd3c7ad93048ba3d48cc0e14d9a, type: 3}
 --- !u!1 &1249156156
 GameObject:
   m_ObjectHideFlags: 0
@@ -1650,9 +1593,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Bigger Trains
-
-'
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -1679,8 +1620,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 22
-  m_fontSizeBase: 22
+  m_fontSize: 20
+  m_fontSizeBase: 20
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -1761,6 +1702,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e625a8a8d15ea994ab0b733a181ed842, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  priceDisplay1: {fileID: 947396977}
+  priceDisplay2: {fileID: 1164044589}
+  priceDisplay3: {fileID: 300252121}
+  priceDisplay4: {fileID: 1261912885}
+  priceDisplay5: {fileID: 229301263}
 --- !u!114 &1719154828
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1989,4 +1935,3 @@ SceneRoots:
   - {fileID: 968780362}
   - {fileID: 1170912847}
   - {fileID: 1719154831}
-  - {fileID: 1231353103}
