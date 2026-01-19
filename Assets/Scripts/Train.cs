@@ -7,7 +7,7 @@ using UnityEngine;
 public class Train : MonoBehaviour
 {
     //Object.Instantiate(train).GetComponent<Train>().Route =
-    GameObject lastStop;
+    
     [Header("Movement")]
     public GameObject Route;
     Routelogic Routelogic;
@@ -15,32 +15,19 @@ public class Train : MonoBehaviour
     int index;
     public static float speed = 0.01f;
     [SerializeField] float mindist = 0.1f;
-    [Header("Passenger slots")]
-    [SerializeField] GameObject[] passengers;
-    [SerializeField] int maxPassengers = 6;
-    [Header("Passenger distances")]
-    [SerializeField] float startx = -0.35f;
-    [SerializeField] float incrementx = 0.35f;
-    [SerializeField] float starty = 0.2f;
-    [SerializeField] float incrementy = -0.4f;
-    [Header("Prefabs")]
-    [SerializeField] GameObject squarePassenger;
-    [SerializeField] GameObject circlePassenger;
-    [SerializeField] GameObject trianglePassenger;
-    
-    
+    public float stopfortime = 0.5f;
+    public List<TrainCar> cars = new List<TrainCar>();
     bool reverse;
-    int stopped;
+    [HideInInspector] public float stopped;
     //List<int> removed;
     
     // Start is called before the first frame update
     void Start()
     {
         Routelogic = Route.GetComponent<Routelogic>();
-        /*for (int i = 0; i < maxPassengers; i++)
-        {
-            passengers.Add(null);
-        }*/
+        
+        foreach (TrainCar car in cars)
+            car.train = this;
     }
 
     // Update is called once per frame
@@ -76,54 +63,18 @@ public class Train : MonoBehaviour
                         index = 0;
                     }
                 }
+                foreach (GameObject station in StationSpawner.stationList)
+                {
+                    if (nextWaypoint == station.transform.position)
+                        foreach (TrainCar car in cars)
+                        {
+                            car.ReachedStop(station);
+                        }
+                }
                 nextWaypoint = Routelogic.Routes[Routelogic.currentRoute][index];
             }
-
-            /*if ((nextStop.transform.position - transform.position).magnitude < mindist)
-                ReachedStop(nextStop);*/
         }
-        else stopped--;
-    }
-        
-    void ReachedStop(GameObject stop)
-    {
-        if (stop != lastStop)
-        stopped = 100;
-        Stations station = stop.GetComponent<Stations>();
-        //removing passengers
-        for (int i = 0; i < passengers.Length;i++)
-        {
-            if (passengers[i] != null)
-            {
-                if (passengers[i].CompareTag(stop.tag))
-                {
-                    Destroy(passengers[i]);
-                    passengers[i] = null;
-                }
-            }
-
-        }
-        //adding passengers
-        for (int i = 0;i < station.people.Length;i++)
-        {
-            for (int j = 0;j <passengers.Length;j++)
-            {
-                if (passengers[j] == null)
-                {
-                    switch (station.people[i])
-                    {
-                        case "null": break;
-                        case "Square": newPassenger(squarePassenger, i, j, station); break;
-                        case "Circle": newPassenger(circlePassenger, i, j, station); break;
-                        case "Triangle": newPassenger(trianglePassenger, i, j, station); break;
-                        default: break;
-                    }
-                    
-                }
-            }
-        }
-        station.people = station.listOfPassengersUpdate(station.people);
-        lastStop = stop;
+        else stopped -= Time.deltaTime;
     }
     private void OnCollisionEnter2D(Collision2D collision)
     {
@@ -135,29 +86,13 @@ public class Train : MonoBehaviour
                     newPassenger(collision.gameObject);
                 }*/
         }
-        if (collision.gameObject.layer ==6)
+        /*if (collision.gameObject.layer ==6)
         {
-            ReachedStop(collision.gameObject);
-        }
-       
-    }
-    void newPassenger(GameObject passenger, int stationSlot, int carSlot, Stations station)
-    {
-        float x;
-        float y;
-        if (carSlot >= maxPassengers / 2)
-        {
-            y = starty + incrementy;
-            x = startx - (incrementx * 3);
-        }
-        else
-        {
-            y = starty;
-            x = startx;
-        }
-        GameObject p = Object.Instantiate(passenger, transform.position + new Vector3(x + (incrementx * (carSlot)), y, -1), transform.rotation);
-        p.transform.parent = transform;
-        passengers[carSlot] = p;
-        station.people[stationSlot] = "null";
+            foreach (TrainCar car in cars)
+            {
+                car.ReachedStop(collision.gameObject);
+            }
+            
+        }*/
     }
 }
