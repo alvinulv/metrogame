@@ -35,33 +35,57 @@ public class shop : MonoBehaviour
     }
     public void MoreRoutes()
     {
-        Routelogic.AddRoute();
+        if (money > upgradePrice1)
+        {
+            money =- upgradePrice1;
+            Routelogic.AddRoute();
+            upgradePrice1 = (int)(upgradePrice1 * 1.2f);
+        }
         eventSystem.SetSelectedGameObject(null);
     }
     public void MoreTrains()
     {
+        if (money > upgradePrice2)
+        {
+            money =- upgradePrice2;
+            upgradePrice2 = (int)(upgradePrice2 * 1.2f);
+        }
         eventSystem.SetSelectedGameObject(null);
     }
     public void FasterTrains()
     {
+        if (money > upgradePrice3)
+        {
+            money =- upgradePrice3;
+            upgradePrice3 = (int)(upgradePrice3 * 1.2f);
+        }
         eventSystem.SetSelectedGameObject(null);
     }
     public void BiggerTrains()
     {
+        if (money > upgradePrice4)
+        {
+            money =- upgradePrice4;
+            upgradePrice4 = (int)(upgradePrice4 * 1.2f);
+        }
         eventSystem.SetSelectedGameObject(null);
     }
     public void Adverticement()
     {
-        if (Stations.NextPersonCanSpawnMin !<= 1)
+        if (money >= upgradePrice5)
         {
-            Stations.NextPersonCanSpawnMin--;
-            Stations.NextPersonCanSpawnMax--;
+            money =- upgradePrice5;
+            if (Stations.NextPersonCanSpawnMin! <= 1)
+            {
+                Stations.NextPersonCanSpawnMin--;
+                Stations.NextPersonCanSpawnMax--;
+            }
+            else if (Stations.NextPersonCanSpawnMax! <= 2)
+            {
+                Stations.NextPersonCanSpawnMax--;
+            }
+            upgradePrice5 = (int)(upgradePrice5 * 1.2f);
         }
-        else if (Stations.NextPersonCanSpawnMax !<= 2)
-        {
-            Stations.NextPersonCanSpawnMax--;
-        }
-        upgradePrice5 = (int)(upgradePrice5 * 1.2f);
         eventSystem.SetSelectedGameObject(null);
     }
 }
