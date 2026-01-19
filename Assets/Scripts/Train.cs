@@ -13,7 +13,7 @@ public class Train : MonoBehaviour
     Routelogic Routelogic;
     Vector3 nextWaypoint;
     int index;
-    [SerializeField] float speed = 0.03f;
+    public static float speed = 0.01f;
     [SerializeField] float mindist = 0.1f;
     [Header("Passenger slots")]
     [SerializeField] GameObject[] passengers;
