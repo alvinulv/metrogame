@@ -7,19 +7,20 @@ using static UnityEditor.Progress;
 
 public class Routelogic : MonoBehaviour
 {
-    int currentIndex = -1;
     [SerializeField] float clickerRadius = 0.5f;
     [SerializeField] LayerMask stationLayer;
     public RaycastHit2D hit;
     LineRenderer lR;
     public List<List<Vector3>> Routes = new List<List<Vector3>>();
-    public List<Vector3> rWp = new List<Vector3>();
+    public int currentRoute = 0;
+    int currentIndex = -1;
     [SerializeField] GameObject baseWaypoint;
     [NonSerialized]public bool isLoop;
     [Header("Debug")]
     bool clicking;
     void Start()
     {
+        Routes.Add(new List<Vector3>());
         lR = GetComponent<LineRenderer>();
     }
     void Update()
@@ -31,53 +32,53 @@ public class Routelogic : MonoBehaviour
         //-------------------------------
         if (Input.GetMouseButtonDown(0) && hit && !clicking)
         {
-            if (rWp.Contains(RoundedVector(pos)))//Get index
+            if (Routes[currentRoute].Contains(RoundedVector(pos)))//Get index
             {
-                currentIndex = rWp.IndexOf(RoundedVector(pos));
+                currentIndex = Routes[currentRoute].IndexOf(RoundedVector(pos));
             }
             else
             {
 
             }
-            if (hit.collider != null && rWp.Count > 0 && (hit.transform.position - rWp[currentIndex]).magnitude < clickerRadius)
+            if (hit.collider != null && Routes[currentRoute].Count > 0 && (hit.transform.position - Routes[currentRoute][currentIndex]).magnitude < clickerRadius)
             {
                 clicking = true;
                 AddRouteWaypoint(hit.transform.position, true);
-                lR.SetPositions(rWp.ToArray());
-            } else if (hit.collider != null && rWp.Count == 0)//First waypoint
+                lR.SetPositions(Routes[currentRoute].ToArray());
+            } else if (hit.collider != null && Routes[currentRoute].Count == 0)//First waypoint
             {
                 clicking = true;
                 AddRouteWaypoint(hit.transform.position);
                 AddRouteWaypoint(hit.transform.position, true);
-                lR.SetPositions(rWp.ToArray());
+                lR.SetPositions(Routes[currentRoute].ToArray());
             }
         }
         if (clicking && Input.GetMouseButton(0))
         {
-            if(rWp.Count > 0) ChangePos(rWp.Count - 1, RoundedVector(pos));
+            if(Routes[currentRoute].Count > 0) ChangePos(Routes[currentRoute].Count - 1, RoundedVector(pos));
             int _temp = 0;
-            foreach (Vector3 wP in rWp)
+            foreach (Vector3 wP in Routes[currentRoute])
             {
-                if (wP == rWp[rWp.Count - 1])
+                if (wP == Routes[currentRoute][Routes[currentRoute].Count - 1])
                     _temp++;
             }
-            if (_temp > 1) ChangePos(rWp.Count - 1, rWp[rWp.Count -2]);
+            if (_temp > 1) ChangePos(Routes[currentRoute].Count - 1, Routes[currentRoute][Routes[currentRoute].Count -2]);
         }
         if (Input.GetMouseButtonUp(0))
         {
             clicking = false;
-            Vector3 _temp = rWp[rWp.Count-1];
-            rWp.RemoveAt(rWp.Count - 1);
-            if (rWp.Count > 0 && !rWp.Contains(_temp))
+            Vector3 _temp = Routes[currentRoute][Routes[currentRoute].Count-1];
+            Routes[currentRoute].RemoveAt(Routes[currentRoute].Count - 1);
+            if (Routes[currentRoute].Count > 0 && !Routes[currentRoute].Contains(_temp))
             {
-                rWp.Add(_temp);
+                Routes[currentRoute].Add(_temp);
             }
             if (hit.collider == null)
             {
-                rWp.Clear();
+                Routes[currentRoute].Clear();
             }
-            lR.SetPositions(rWp.ToArray());
-            if(rWp.Count == 0)
+            lR.SetPositions(Routes[currentRoute].ToArray());
+            if(Routes[currentRoute].Count == 0)
             {
                 lR.positionCount = 0;
             }
@@ -86,39 +87,39 @@ public class Routelogic : MonoBehaviour
         if (Input.GetMouseButtonDown(1) && hit && !clicking) //leftclick
         {
             clicking = true;
-            if (rWp.Contains(RoundedVector(pos)))
+            if (Routes[currentRoute].Contains(RoundedVector(pos)))
             {
-                currentIndex = rWp.IndexOf(RoundedVector(pos));
+                currentIndex = Routes[currentRoute].IndexOf(RoundedVector(pos));
             }
         }
         if (clicking && Input.GetMouseButton(1))//leftclick hold
         {
-            if (rWp.Count > 0) ChangePos(currentIndex, RoundedVector(pos));
+            if (Routes[currentRoute].Count > 0) ChangePos(currentIndex, RoundedVector(pos));
             int _temp = 0;
-            foreach (Vector3 wP in rWp)
+            foreach (Vector3 wP in Routes[currentRoute])
             {
-                if (wP == rWp[currentIndex])
+                if (wP == Routes[currentRoute][currentIndex])
                     _temp++;
             }
-            if (_temp > 1) ChangePos(currentIndex, rWp[currentIndex-1]);
+            if (_temp > 1) ChangePos(currentIndex, Routes[currentRoute][currentIndex-1]);
         }
         if (Input.GetMouseButtonUp(1))
         {
             clicking = false;
-            Vector3 _temp = rWp[currentIndex];
-            rWp.RemoveAt(currentIndex);
-            if (rWp.Count > 0 && !rWp.Contains(_temp) && hit.collider != null)
+            Vector3 _temp = Routes[currentRoute][currentIndex];
+            Routes[currentRoute].RemoveAt(currentIndex);
+            if (Routes[currentRoute].Count > 0 && !Routes[currentRoute].Contains(_temp) && hit.collider != null)
             {
-                rWp.Insert(currentIndex, _temp);
+                Routes[currentRoute].Insert(currentIndex, _temp);
             }
-            lR.SetPositions(rWp.ToArray());
-            if (rWp.Count == 0)//debug for if rWp is empty
+            lR.SetPositions(Routes[currentRoute].ToArray());
+            if (Routes[currentRoute].Count == 0)//debug for if rWp is empty
             {
                 lR.positionCount = 0;
             }
         }
         //------------------------------
-        if (rWp.Count > 1 && rWp[0] == rWp[rWp.Count - 1])
+        if (Routes[currentRoute].Count > 1 && Routes[currentRoute][0] == Routes[currentRoute][Routes[currentRoute].Count - 1])
         {
             isLoop = true;
         }
@@ -129,42 +130,42 @@ public class Routelogic : MonoBehaviour
     }
     void AddRouteWaypoint(Vector3 _pos)
     {
-        if (rWp.Contains(_pos))
+        if (Routes[currentRoute].Contains(_pos))
         {
             return;
         }
-        rWp.Add(_pos);
-        lR.positionCount = rWp.Count;
-        lR.SetPositions(rWp.ToArray());
+        Routes[currentRoute].Add(_pos);
+        lR.positionCount = Routes[currentRoute].Count;
+        lR.SetPositions(Routes[currentRoute].ToArray());
     }
     void AddRouteWaypoint(Vector3 _pos, int _index)
     {
-        if (rWp.Contains(_pos))
+        if (Routes[currentRoute].Contains(_pos))
         {
             return;
         }
-        if (rWp.Count < 2)
+        if (Routes[currentRoute].Count < 2)
         {
             AddRouteWaypoint(_pos);
         }
         else
         {
-            rWp.Insert(_index, _pos);
+            Routes[currentRoute].Insert(_index, _pos);
         }
-        lR.positionCount = rWp.Count;
-        lR.SetPositions(rWp.ToArray());
+        lR.positionCount = Routes[currentRoute].Count;
+        lR.SetPositions(Routes[currentRoute].ToArray());
     }
     void AddRouteWaypoint(Vector3 _pos, bool _override)
     {
-        rWp.Add(_pos);
-        lR.positionCount = rWp.Count;
-        lR.SetPositions(rWp.ToArray());
+        Routes[currentRoute].Add(_pos);
+        lR.positionCount = Routes[currentRoute].Count;
+        lR.SetPositions(Routes[currentRoute].ToArray());
     }
 
     void RemovePoint(int _index)
     {
-        rWp.RemoveAt(_index);
-        lR.SetPositions(rWp.ToArray());
+        Routes[currentRoute].RemoveAt(_index);
+        lR.SetPositions(Routes[currentRoute].ToArray());
     }
     Vector3 RoundedVector(Vector3 _pos)
     {
@@ -172,7 +173,7 @@ public class Routelogic : MonoBehaviour
     }
     void ChangePos(int _index, Vector3 _pos)
     {
-        rWp[_index] = _pos;
-        lR.SetPositions(rWp.ToArray());
+        Routes[currentRoute][_index] = _pos;
+        lR.SetPositions(Routes[currentRoute].ToArray());
     }
 }
