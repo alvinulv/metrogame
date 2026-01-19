@@ -7,7 +7,7 @@ using static UnityEditor.Progress;
 
 public class Routelogic : MonoBehaviour
 {
-    static Routelogic Routelogic_;
+    public static Routelogic Routelogic_;
     [SerializeField] float clickerRadius = 0.5f;
     [SerializeField] LayerMask stationLayer;
     public RaycastHit2D hit;
