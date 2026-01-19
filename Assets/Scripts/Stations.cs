@@ -26,7 +26,7 @@ public class Stations : MonoBehaviour
                 if (people[i] == "null")
                 {
                     people[i] = whatPersonShouldSpawn();
-                    Debug.Log("new " + people[i] + " appeared");
+                    //Debug.Log("new " + people[i] + " appeared");
                     timeSinceLastPerson = 0;
                     nextPersonCanSpawn = Random.Range(10, 20);
                     transform.Find(people[i] + " (" + i + ")").GetComponent<SpriteRenderer>().enabled = true;
