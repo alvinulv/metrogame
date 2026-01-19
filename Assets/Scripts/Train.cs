@@ -13,7 +13,7 @@ public class Train : MonoBehaviour
     Routelogic Routelogic;
     Vector3 nextWaypoint;
     int index;
-    [SerializeField] float speed = 0.03f;
+    public static float speed = 0.01f;
     [SerializeField] float mindist = 0.1f;
     [Header("Passenger slots")]
     [SerializeField] GameObject[] passengers;
@@ -56,7 +56,7 @@ public class Train : MonoBehaviour
                 if (!reverse)
                 {
                     index++;
-                    if (index > Routelogic.rWp.Count)
+                    if (index > Routelogic.Routes[Routelogic.currentRoute].Count)
                     {
                         if (Routelogic.isLoop)
                             index = 0;
@@ -76,7 +76,7 @@ public class Train : MonoBehaviour
                         index = 0;
                     }
                 }
-                nextWaypoint = Routelogic.rWp[index];
+                nextWaypoint = Routelogic.Routes[Routelogic.currentRoute][index];
             }
 
             /*if ((nextStop.transform.position - transform.position).magnitude < mindist)

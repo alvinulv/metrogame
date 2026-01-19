@@ -293,9 +293,9 @@ MonoBehaviour:
   - {fileID: 8324163087160365532, guid: cdfebcd3c7ad93048ba3d48cc0e14d9a, type: 3}
   - {fileID: 2186161368206073949, guid: 859f2dd738aa9b8429fcce72f99b18aa, type: 3}
   - {fileID: 6524192218044347768, guid: b9b2aae368210be41aee928cc7231cff, type: 3}
-  maxStations: 1000
+  maxStations: 9
   xbound: 8
-  ybound: 5
+  ybound: 4
   frequency: 3
 --- !u!4 &79476977
 Transform:
@@ -389,7 +389,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Route: {fileID: 2049034469}
-  speed: 0.01
   mindist: 0.3
   passengers:
   - {fileID: 0}
@@ -609,10 +608,8 @@ MonoBehaviour:
   stationLayer:
     serializedVersion: 2
     m_Bits: 64
-  rWp: []
+  currentRoute: 0
   baseWaypoint: {fileID: 6533094328314994640, guid: 5522553ce6d6917408e3262637c247f1, type: 3}
-  removeFirst: 0
-  removeLast: 0
 --- !u!4 &2049034472
 Transform:
   m_ObjectHideFlags: 0
