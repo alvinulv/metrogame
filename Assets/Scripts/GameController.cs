@@ -15,7 +15,7 @@ public class GameController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        stationspawnreset();
+
     }
 
     // Update is called once per frame
@@ -29,24 +29,33 @@ public class GameController : MonoBehaviour
         {
 
             time = 0;
-            if (stationsToSpawn.Count > 0)
+            if (stationsToSpawn.Count <= 0)
             {
-                stationList.Add(Object.Instantiate(stationPrefabs[Random.Range(0, stationPrefabs.Length)], new Vector3(Random.Range(-xbound, xbound), Random.Range(-ybound, ybound), 0), Quaternion.identity));
-                if (stationList.Count >= maxStations)
+                for (int i = 0; i < stationPrefabs.Length; i++)
                 {
-                    Destroy(gameObject);
+                    stationsToSpawn.Add(stationPrefabs[i]);
+                    stationsToSpawn.Add(stationPrefabs[i]);
                 }
             }
-            
+            int rand = Random.Range(0, stationsToSpawn.Count);
+            stationList.Add(Object.Instantiate(stationsToSpawn[rand],FindSpawn(), Quaternion.identity));
+            stationsToSpawn.RemoveAt(rand);
+            if (stationList.Count >= maxStations)
+            {
+                Destroy(gameObject);
+            }
         }
         
     }
-    void stationspawnreset()
+    Vector3 FindSpawn()
     {
-        for (int i = 0; i < stationPrefabs.Length; i++)
+        Vector3 temp = new Vector3(Random.Range(-xbound, xbound), Random.Range(-ybound, ybound), 0);
+        for (int i = 0;i < stationList.Count;i++)
         {
-            stationsToSpawn.Add(stationPrefabs[i]);
-            stationsToSpawn.Add(stationPrefabs[i]);
+            if (stationList[i].transform.position == temp)
+                return FindSpawn();
         }
+        return temp;
     }
+
 }
