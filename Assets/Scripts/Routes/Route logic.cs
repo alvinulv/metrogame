@@ -24,7 +24,7 @@ public class Routelogic : MonoBehaviour
     }
     void Start()
     {
-        Routes.Add(new List<Vector3>());
+        AddRoute();
         lR = GetComponent<LineRenderer>();
     }
     void Update()
@@ -174,5 +174,9 @@ public class Routelogic : MonoBehaviour
     {
         Routes[currentRoute][_index] = _pos;
         lR.SetPositions(Routes[currentRoute].ToArray());
+    }
+    public static void AddRoute()
+    {
+        Routelogic_.Routes.Add(new List<Vector3>());
     }
 }
