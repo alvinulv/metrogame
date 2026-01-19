@@ -18,9 +18,12 @@ public class Routelogic : MonoBehaviour
     [NonSerialized]public bool isLoop;
     [Header("Debug")]
     bool clicking;
-    void Start()
+    private void Awake()
     {
         Routelogic_ = this;
+    }
+    void Start()
+    {
         Routes.Add(new List<Vector3>());
         lR = GetComponent<LineRenderer>();
     }
