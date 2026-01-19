@@ -32,7 +32,7 @@ public class Routelogic : MonoBehaviour
         Vector3 p = Input.mousePosition;
         Vector3 pos = Camera.main.ScreenToWorldPoint(p);
         hit = Physics2D.CircleCast(new Vector2(pos.x, pos.y), clickerRadius, Vector2.right,0f,stationLayer);
-        Debug.Log(hit.collider);
+        //Debug.Log(hit.collider);
         //-------------------------------
         if (Input.GetMouseButtonDown(0) && hit && !clicking)
         {
@@ -42,7 +42,7 @@ public class Routelogic : MonoBehaviour
             }
             else
             {
-                currentIndex = Routes[currentRoute].Count - 1;
+                //currentIndex = Routes[currentRoute].Count - 1;
             }
 
             if (hit.collider != null && Routes[currentRoute].Count > 0 && (hit.transform.position - Routes[currentRoute][currentIndex]).magnitude < clickerRadius)
