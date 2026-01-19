@@ -8,6 +8,8 @@ public class Stations : MonoBehaviour
     string[] possiblePeople = { "Circle", "Triangle", "Square" };
     float timeSinceLastPerson = 10;
     int nextPersonCanSpawn = 15;
+    public static int NextPersonCanSpawnMin = 10;
+    public static int NextPersonCanSpawnMax = 20;
     // Start is called before the first frame update
     void Start()
     {

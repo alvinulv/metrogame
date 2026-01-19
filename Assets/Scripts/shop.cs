@@ -6,8 +6,13 @@ using UnityEngine.UI;
 
 public class shop : MonoBehaviour
 {
+    public static int money;
     EventSystem eventSystem;
-    int upgradePrice1 = 0;
+    int upgradePrice1 = 50;
+    int upgradePrice2 = 25;
+    int upgradePrice3 = 10;
+    int upgradePrice4 = 10;
+    int upgradePrice5 = 100;
     // Start is called before the first frame update
     void Start()
     {
@@ -30,6 +35,7 @@ public class shop : MonoBehaviour
     }
     public void MoreRoutes()
     {
+        Routelogic.AddRoute();
         eventSystem.SetSelectedGameObject(null);
     }
     public void MoreTrains()
@@ -46,6 +52,16 @@ public class shop : MonoBehaviour
     }
     public void Adverticement()
     {
+        if (Stations.NextPersonCanSpawnMin !<= 1)
+        {
+            Stations.NextPersonCanSpawnMin--;
+            Stations.NextPersonCanSpawnMax--;
+        }
+        else if (Stations.NextPersonCanSpawnMax !<= 2)
+        {
+            Stations.NextPersonCanSpawnMax--;
+        }
+        upgradePrice5 = (int)(upgradePrice5 * 1.2f);
         eventSystem.SetSelectedGameObject(null);
     }
 }
