@@ -7,19 +7,20 @@ using static UnityEditor.Progress;
 
 public class Routelogic : MonoBehaviour
 {
+    static Routelogic Routelogic_;
     [SerializeField] float clickerRadius = 0.5f;
     [SerializeField] LayerMask stationLayer;
     public RaycastHit2D hit;
     LineRenderer lR;
-    public List<List<Vector3>> Routes = new List<List<Vector3>>();
+    [SerializeField] public List<List<Vector3>> Routes = new List<List<Vector3>>();
     public int currentRoute = 0;
     int currentIndex = -1;
-    [SerializeField] GameObject baseWaypoint;
     [NonSerialized]public bool isLoop;
     [Header("Debug")]
     bool clicking;
     void Start()
     {
+        Routelogic_ = this;
         Routes.Add(new List<Vector3>());
         lR = GetComponent<LineRenderer>();
     }
@@ -38,18 +39,19 @@ public class Routelogic : MonoBehaviour
             }
             else
             {
-
+                currentIndex = Routes[currentRoute].Count - 1;
             }
+
             if (hit.collider != null && Routes[currentRoute].Count > 0 && (hit.transform.position - Routes[currentRoute][currentIndex]).magnitude < clickerRadius)
             {
                 clicking = true;
-                AddRouteWaypoint(hit.transform.position, true);
+                AddRouteWaypoint(hit.transform.position, currentIndex, true);
                 lR.SetPositions(Routes[currentRoute].ToArray());
             } else if (hit.collider != null && Routes[currentRoute].Count == 0)//First waypoint
             {
                 clicking = true;
                 AddRouteWaypoint(hit.transform.position);
-                AddRouteWaypoint(hit.transform.position, true);
+                AddRouteWaypoint(hit.transform.position, currentIndex,true);
                 lR.SetPositions(Routes[currentRoute].ToArray());
             }
         }
@@ -155,16 +157,10 @@ public class Routelogic : MonoBehaviour
         lR.positionCount = Routes[currentRoute].Count;
         lR.SetPositions(Routes[currentRoute].ToArray());
     }
-    void AddRouteWaypoint(Vector3 _pos, bool _override)
+    void AddRouteWaypoint(Vector3 _pos, int _index, bool _override)
     {
         Routes[currentRoute].Add(_pos);
         lR.positionCount = Routes[currentRoute].Count;
-        lR.SetPositions(Routes[currentRoute].ToArray());
-    }
-
-    void RemovePoint(int _index)
-    {
-        Routes[currentRoute].RemoveAt(_index);
         lR.SetPositions(Routes[currentRoute].ToArray());
     }
     Vector3 RoundedVector(Vector3 _pos)
