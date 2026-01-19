@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using TMPro;
 
 public class shop : MonoBehaviour
 {
@@ -22,7 +23,11 @@ public class shop : MonoBehaviour
     void Start()
     {
         eventSystem = FindFirstObjectByType<EventSystem>();
-        //priceDisplay1.GetComponent<Text>().text = upgradePrice1.ToString();
+        priceDisplay1.GetComponent<TMP_Text>().text = upgradePrice1.ToString();
+        priceDisplay2.GetComponent<TMP_Text>().text = upgradePrice2.ToString();
+        priceDisplay3.GetComponent<TMP_Text>().text = upgradePrice3.ToString();
+        priceDisplay4.GetComponent<TMP_Text>().text = upgradePrice4.ToString();
+        priceDisplay5.GetComponent<TMP_Text>().text = upgradePrice5.ToString();
     }
 
     // Update is called once per frame
@@ -37,7 +42,7 @@ public class shop : MonoBehaviour
             money =- upgradePrice1;
             Routelogic.AddRoute();
             upgradePrice1 = (int)(upgradePrice1 * 1.2f);
-            priceDisplay1.GetComponent<Text>().SetText(upgradePrice1.ToString());
+            priceDisplay1.GetComponent<TMP_Text>().text = upgradePrice1.ToString();
         }
         eventSystem.SetSelectedGameObject(null);
     }
@@ -47,7 +52,7 @@ public class shop : MonoBehaviour
         {
             money =- upgradePrice2;
             upgradePrice2 = (int)(upgradePrice2 * 1.2f);
-           // priceDisplay2.GetComponent<Text>().text = upgradePrice2.ToString();
+            priceDisplay2.GetComponent<TMP_Text>().text = upgradePrice2.ToString();
         }
         eventSystem.SetSelectedGameObject(null);
     }
@@ -57,7 +62,7 @@ public class shop : MonoBehaviour
         {
             money =- upgradePrice3;
             upgradePrice3 = (int)(upgradePrice3 * 1.2f);
-           // priceDisplay3.GetComponent<Text>().text = upgradePrice3.ToString();
+            priceDisplay3.GetComponent<TMP_Text>().text = upgradePrice3.ToString();
         }
         eventSystem.SetSelectedGameObject(null);
     }
@@ -67,7 +72,7 @@ public class shop : MonoBehaviour
         {
             money =- upgradePrice4;
             upgradePrice4 = (int)(upgradePrice4 * 1.2f);
-            //priceDisplay4.GetComponent<Text>().text = upgradePrice4.ToString();
+            priceDisplay4.GetComponent<TMP_Text>().text = upgradePrice4.ToString();
         }
         eventSystem.SetSelectedGameObject(null);
     }
@@ -86,7 +91,7 @@ public class shop : MonoBehaviour
                 Stations.NextPersonCanSpawnMax--;
             }
             upgradePrice5 = (int)(upgradePrice5 * 1.2f);
-            //priceDisplay5.GetComponent<Text>().text = upgradePrice5.ToString();
+            priceDisplay5.GetComponent<TMP_Text>().text = upgradePrice5.ToString();
         }
         eventSystem.SetSelectedGameObject(null);
     }
