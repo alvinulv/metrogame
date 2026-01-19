@@ -93,7 +93,7 @@ public class Stations : MonoBehaviour
     }
     string whatPersonShouldSpawn()
     {
-        int j = Random.Range(1, 4);
+        int j = Random.Range(0, 3);
         if (transform.CompareTag(possiblePeople[j])) { return whatPersonShouldSpawn(); }
         return possiblePeople[j];
     }
