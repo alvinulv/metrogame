@@ -42,8 +42,11 @@ public class Routelogic : MonoBehaviour
         {
             if (routes[currentRoute].route.Contains(RoundedVector(pos)))//Get index
             {
-                //currentIndex = routes[currentRoute].route.IndexOf(RoundedVector(pos));
-                currentIndex = routes[currentRoute].route.Count - 1;
+                currentIndex = routes[currentRoute].route.IndexOf(RoundedVector(pos));
+                if (currentIndex <= routes[currentRoute].route.Count - 1)
+                {
+                    //currentRoute = currentRoute + 1;
+                }
             }
             else
             {
@@ -65,24 +68,38 @@ public class Routelogic : MonoBehaviour
                 routes[currentRoute].lR.SetPositions(routes[currentRoute].route.ToArray());
             }
         }
+
         //--------------------
+
         if (clicking && Input.GetMouseButton(0))
         {
             if (routes[currentRoute].route.Count > 0) ChangePos(currentIndex, RoundedVector(pos));
             int _temp = 0;
             foreach (Vector3 wP in routes[currentRoute].route)
             {
-                if (wP == routes[currentRoute].route[routes[currentRoute].route.Count - 1])
+                if (wP == routes[currentRoute].route[currentIndex])
                     _temp++;
             }
-            if (_temp > 1) ChangePos(currentIndex, routes[currentRoute].route[routes[currentRoute].route.Count - 2]);
+            if (_temp > 1)
+            {
+                if (currentIndex != 0) 
+                {
+                    ChangePos(currentIndex, routes[currentRoute].route[currentIndex-1]); 
+                }else
+                {
+                    ChangePos(currentIndex, routes[currentRoute].route[currentIndex + 1]);
+                }
+
+            }
         }
+
         //--------------------
+
         if (Input.GetMouseButtonUp(0))
         {
             clicking = false;
-            Vector3 _temp = routes[currentRoute].route[routes[currentRoute].route.Count - 1];
-            routes[currentRoute].route.RemoveAt(routes[currentRoute].route.Count - 1);
+            Vector3 _temp = routes[currentRoute].route[currentIndex];
+            routes[currentRoute].route.RemoveAt(currentIndex);
             if (routes[currentRoute].route.Count > 0 && !routes[currentRoute].route.Contains(_temp))
             {
                 routes[currentRoute].route.Add(_temp);
