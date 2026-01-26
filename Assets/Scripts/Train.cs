@@ -43,7 +43,7 @@ public class Train : MonoBehaviour
                 if (!reverse)
                 {
                     index++;
-                    if (index > Routelogic.Routes[Routelogic.currentRoute].Count)
+                    if (index > Routelogic.routes[Routelogic.currentRoute].route.Count)
                     {
                         if (Routelogic.isLoop)
                             index = 0;
@@ -71,7 +71,7 @@ public class Train : MonoBehaviour
                             car.ReachedStop(station);
                         }
                 }
-                nextWaypoint = Routelogic.Routes[Routelogic.currentRoute][index];
+                nextWaypoint = Routelogic.routes[Routelogic.currentRoute].route[index];
             }
         }
         else stopped -= Time.deltaTime;

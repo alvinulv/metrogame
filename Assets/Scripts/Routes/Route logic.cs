@@ -1,9 +1,8 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
+
 using UnityEngine;
-using static UnityEditor.Progress;
 
 public class Routelogic : MonoBehaviour
 {
@@ -12,7 +11,7 @@ public class Routelogic : MonoBehaviour
     [SerializeField] LayerMask stationLayer;
     public RaycastHit2D hit;
     LineRenderer lR;
-    [SerializeField] public List<List<Vector3>> Routes = new List<List<Vector3>>();
+    [SerializeField] public List<Route> routes = new List<Route>();
     public int currentRoute = 0;
     int currentIndex = -1;
     [NonSerialized]public bool isLoop;
@@ -31,140 +30,145 @@ public class Routelogic : MonoBehaviour
     {
         Vector3 p = Input.mousePosition;
         Vector3 pos = Camera.main.ScreenToWorldPoint(p);
-        hit = Physics2D.CircleCast(new Vector2(pos.x, pos.y), clickerRadius, Vector2.right,0f,stationLayer);
-        //Debug.Log(hit.collider);
-        //-------------------------------
+        hit = Physics2D.CircleCast(new Vector2(pos.x, pos.y), clickerRadius, Vector2.right, 0f, stationLayer);
+
+        RightClick(pos);
+        LeftClick(pos);
+
+    }
+
+    private void RightClick(Vector3 pos)
+    {
         if (Input.GetMouseButtonDown(0) && hit && !clicking)
         {
-            if (Routes[currentRoute].Contains(RoundedVector(pos)))//Get index
+            if (routes[currentRoute].route.Contains(RoundedVector(pos)))//Get index
             {
-                currentIndex = Routes[currentRoute].IndexOf(RoundedVector(pos));
+                currentIndex = routes[currentRoute].route.IndexOf(RoundedVector(pos));
             }
             else
             {
-                //currentIndex = Routes[currentRoute].Count - 1;
+                currentIndex = routes[currentRoute].route.Count - 1;
             }
 
-            if (hit.collider != null && Routes[currentRoute].Count > 0 && (hit.transform.position - Routes[currentRoute][currentIndex]).magnitude < clickerRadius)
+            if (hit.collider != null && routes[currentRoute].route.Count > 0 && (hit.transform.position - routes[currentRoute].route[currentIndex]).magnitude < clickerRadius)
             {
                 clicking = true;
-                AddRouteWaypoint(hit.transform.position, currentIndex, true);
-                lR.SetPositions(Routes[currentRoute].ToArray());
-            } else if (hit.collider != null && Routes[currentRoute].Count == 0)//First waypoint
+                AddRouteWaypoint(hit.transform.position, currentIndex + 1, true);
+                lR.SetPositions(routes[currentRoute].route.ToArray());
+            }
+            else if (hit.collider != null && routes[currentRoute].route.Count == 0)//First waypoint
             {
                 clicking = true;
                 AddRouteWaypoint(hit.transform.position);
-                AddRouteWaypoint(hit.transform.position, currentIndex,true);
-                lR.SetPositions(Routes[currentRoute].ToArray());
+                currentIndex = 1;
+                AddRouteWaypoint(hit.transform.position, currentIndex, true);
+                lR.SetPositions(routes[currentRoute].route.ToArray());
             }
         }
+        //--------------------
         if (clicking && Input.GetMouseButton(0))
         {
-            if(Routes[currentRoute].Count > 0) ChangePos(Routes[currentRoute].Count - 1, RoundedVector(pos));
+            if (routes[currentRoute].route.Count > 0) ChangePos(currentIndex, RoundedVector(pos));
             int _temp = 0;
-            foreach (Vector3 wP in Routes[currentRoute])
+            foreach (Vector3 wP in routes[currentRoute].route)
             {
-                if (wP == Routes[currentRoute][Routes[currentRoute].Count - 1])
+                if (wP == routes[currentRoute].route[routes[currentRoute].route.Count - 1])
                     _temp++;
             }
-            if (_temp > 1) ChangePos(Routes[currentRoute].Count - 1, Routes[currentRoute][Routes[currentRoute].Count -2]);
+            if (_temp > 1) ChangePos(currentIndex, routes[currentRoute].route[routes[currentRoute].route.Count - 2]);
         }
+        //--------------------
         if (Input.GetMouseButtonUp(0))
         {
             clicking = false;
-            Vector3 _temp = Routes[currentRoute][Routes[currentRoute].Count-1];
-            Routes[currentRoute].RemoveAt(Routes[currentRoute].Count - 1);
-            if (Routes[currentRoute].Count > 0 && !Routes[currentRoute].Contains(_temp))
+            Vector3 _temp = routes[currentRoute].route[routes[currentRoute].route.Count - 1];
+            routes[currentRoute].route.RemoveAt(routes[currentRoute].route.Count - 1);
+            if (routes[currentRoute].route.Count > 0 && !routes[currentRoute].route.Contains(_temp))
             {
-                Routes[currentRoute].Add(_temp);
+                routes[currentRoute].route.Add(_temp);
             }
             if (hit.collider == null)
             {
-                Routes[currentRoute].Clear();
+                routes[currentRoute].route.Clear();
             }
-            lR.SetPositions(Routes[currentRoute].ToArray());
-            if(Routes[currentRoute].Count == 0)
+            lR.SetPositions(routes[currentRoute].route.ToArray());
+            if (routes[currentRoute].route.Count == 0)
             {
                 lR.positionCount = 0;
             }
         }
-        //----------------------------
+    }
+
+    void LeftClick(Vector3 pos)
+    {
         if (Input.GetMouseButtonDown(1) && hit && !clicking) //leftclick
         {
             clicking = true;
-            if (Routes[currentRoute].Contains(RoundedVector(pos)))
+            if (routes[currentRoute].route.Contains(RoundedVector(pos)))
             {
-                currentIndex = Routes[currentRoute].IndexOf(RoundedVector(pos));
+                currentIndex = routes[currentRoute].route.IndexOf(RoundedVector(pos));
             }
         }
         if (clicking && Input.GetMouseButton(1))//leftclick hold
         {
-            if (Routes[currentRoute].Count > 0) ChangePos(currentIndex, RoundedVector(pos));
+            if (routes[currentRoute].route.Count > 0) ChangePos(currentIndex, RoundedVector(pos));
             int _temp = 0;
-            foreach (Vector3 wP in Routes[currentRoute])
+            foreach (Vector3 wP in routes[currentRoute].route)
             {
-                if (wP == Routes[currentRoute][currentIndex])
+                if (wP == routes[currentRoute].route[currentIndex])
                     _temp++;
             }
-            if (_temp > 1) ChangePos(currentIndex, Routes[currentRoute][currentIndex-1]);
+            if (_temp > 1) ChangePos(currentIndex, routes[currentRoute].route[currentIndex - 1]);
         }
         if (Input.GetMouseButtonUp(1))
         {
             clicking = false;
-            Vector3 _temp = Routes[currentRoute][currentIndex];
-            Routes[currentRoute].RemoveAt(currentIndex);
-            if (Routes[currentRoute].Count > 0 && !Routes[currentRoute].Contains(_temp) && hit.collider != null)
+            Vector3 _temp = routes[currentRoute].route[currentIndex];
+            routes[currentRoute].route.RemoveAt(currentIndex);
+            if (routes[currentRoute].route.Count > 0 && !routes[currentRoute].route.Contains(_temp) && hit.collider != null)
             {
-                Routes[currentRoute].Insert(currentIndex, _temp);
+                routes[currentRoute].route.Insert(currentIndex, _temp);
             }
-            lR.SetPositions(Routes[currentRoute].ToArray());
-            if (Routes[currentRoute].Count == 0)//debug for if rWp is empty
+            lR.SetPositions(routes[currentRoute].route.ToArray());
+            if (routes[currentRoute].route.Count == 0)//debug for if rWp is empty
             {
                 lR.positionCount = 0;
             }
         }
-        //------------------------------
-        if (Routes[currentRoute].Count > 1 && Routes[currentRoute][0] == Routes[currentRoute][Routes[currentRoute].Count - 1])
-        {
-            isLoop = true;
-        }
-        else
-        {
-            isLoop = false;
-        }
     }
+
     void AddRouteWaypoint(Vector3 _pos)
     {
-        if (Routes[currentRoute].Contains(_pos))
+        if (routes[currentRoute].route.Contains(_pos))
         {
             return;
         }
-        Routes[currentRoute].Add(_pos);
-        lR.positionCount = Routes[currentRoute].Count;
-        lR.SetPositions(Routes[currentRoute].ToArray());
+        routes[currentRoute].route.Add(_pos);
+        lR.positionCount = routes[currentRoute].route.Count;
+        lR.SetPositions(routes[currentRoute].route.ToArray());
     }
     void AddRouteWaypoint(Vector3 _pos, int _index)
     {
-        if (Routes[currentRoute].Contains(_pos))
+        if (routes[currentRoute].route.Contains(_pos))
         {
             return;
         }
-        if (Routes[currentRoute].Count < 2)
+        if (routes[currentRoute].route.Count < 2)
         {
             AddRouteWaypoint(_pos);
         }
         else
         {
-            Routes[currentRoute].Insert(_index, _pos);
+            routes[currentRoute].route.Insert(_index, _pos);
         }
-        lR.positionCount = Routes[currentRoute].Count;
-        lR.SetPositions(Routes[currentRoute].ToArray());
+        lR.positionCount = routes[currentRoute].route.Count;
+        lR.SetPositions(routes[currentRoute].route.ToArray());
     }
     void AddRouteWaypoint(Vector3 _pos, int _index, bool _override)
     {
-        Routes[currentRoute].Add(_pos);
-        lR.positionCount = Routes[currentRoute].Count;
-        lR.SetPositions(Routes[currentRoute].ToArray());
+        routes[currentRoute].route.Add(_pos);
+        lR.positionCount = routes[currentRoute].route.Count;
+        lR.SetPositions(routes[currentRoute].route.ToArray());
     }
     Vector3 RoundedVector(Vector3 _pos)
     {
@@ -172,11 +176,11 @@ public class Routelogic : MonoBehaviour
     }
     void ChangePos(int _index, Vector3 _pos)
     {
-        Routes[currentRoute][_index] = _pos;
-        lR.SetPositions(Routes[currentRoute].ToArray());
+        routes[currentRoute].route[_index] = _pos;
+        lR.SetPositions(routes[currentRoute].route.ToArray());
     }
     public static void AddRoute()
     {
-        Routelogic_.Routes.Add(new List<Vector3>());
+        Routelogic_.routes.Add(new Route());
     }
 }
