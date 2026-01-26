@@ -399,6 +399,7 @@ MonoBehaviour:
   routes: []
   currentRoute: 0
   currentIndex: -1
+  addRoute: 0
   baseRouteColour: {fileID: 2100000, guid: 8c5133f3193425c4d990d5d317f11bf1, type: 2}
 --- !u!4 &2049034472
 Transform:
@@ -500,6 +501,10 @@ PrefabInstance:
       propertyPath: Route
       value: 
       objectReference: {fileID: 2049034469}
+    - target: {fileID: 7070379311891078162, guid: 3efb58ba08010d647a2fe9f205eceb13, type: 3}
+      propertyPath: Routelogic
+      value: 
+      objectReference: {fileID: 2049034471}
     - target: {fileID: 7232554869008327915, guid: 3efb58ba08010d647a2fe9f205eceb13, type: 3}
       propertyPath: m_Name
       value: Train

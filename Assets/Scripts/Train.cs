@@ -10,7 +10,7 @@ public class Train : MonoBehaviour
     [SerializeField] GameObject carPrefab;
     [SerializeField] GameObject carPrefab2;
     [Header("Movement")]
-    public GameObject Route;
+    [SerializeField] int route;
     Routelogic Routelogic;
     Vector3 nextWaypoint;
     int index;
@@ -26,8 +26,7 @@ public class Train : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Routelogic = Route.GetComponent<Routelogic>();
-        
+        Routelogic = GameObject.Find("RouteLogic").GetComponent<Routelogic>();
         foreach (TrainCar car in cars)
             car.train = this;
     }
@@ -47,7 +46,7 @@ public class Train : MonoBehaviour
                 if (!reverse)
                 {
                     index++;
-                    if (index > Routelogic.routes[Routelogic.currentRoute].route.Count)
+                    if (index > Routelogic.routes[route].route.Count)
                     {
                         if (Routelogic.isLoop)
                             index = 0;
@@ -75,7 +74,8 @@ public class Train : MonoBehaviour
                             car.ReachedStop(station);
                         }
                 }
-                nextWaypoint = Routelogic.routes[Routelogic.currentRoute].route[index];
+                if (Routelogic.routes[route] != null)
+                nextWaypoint = Routelogic.routes[route].route[index];
             }
         }
         else stopped -= Time.deltaTime;
