@@ -15,6 +15,7 @@ public class Routelogic : MonoBehaviour
     public int currentIndex = -1;
     [NonSerialized]public bool isLoop;
     [Header("Debug")]
+    public bool addRoute;
     bool clicking;
     [SerializeField] Material baseRouteColour;
     private void Awake()
@@ -27,6 +28,11 @@ public class Routelogic : MonoBehaviour
     }
     void Update()
     {
+        if (addRoute)
+        {
+            addRoute = false;
+            AddRoute(null);
+        }
         Vector3 p = Input.mousePosition;
         Vector3 pos = Camera.main.ScreenToWorldPoint(p);
         hit = Physics2D.CircleCast(new Vector2(pos.x, pos.y), clickerRadius, Vector2.right, 0f, stationLayer);

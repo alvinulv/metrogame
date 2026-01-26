@@ -6,7 +6,6 @@ using UnityEngine;
 [Serializable]
 public class Route
 {
-    public string name;
     public List<Vector3> route = new List<Vector3>();
     public LineRenderer lR;
 
