@@ -82,7 +82,7 @@ public class TrainCar : MonoBehaviour
         if (carSlot >= maxPassengers / 2)
         {
             y = starty + incrementy;
-            x = startx - (incrementx * 3);
+            x = startx - (incrementx * maxPassengers / 2);
         }
         else
         {
