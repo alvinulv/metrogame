@@ -8,7 +8,7 @@ public class TrainCar : MonoBehaviour
     GameObject lastStop;
     [Header("Passenger slots")]
     [SerializeField] GameObject[] passengers;
-    [SerializeField] int maxPassengers = 6;
+    [SerializeField] int rowSize = 6;
     [Header("Passenger distances")]
     [SerializeField] float startx = -0.35f;
     [SerializeField] float incrementx = 0.35f;
@@ -79,10 +79,10 @@ public class TrainCar : MonoBehaviour
     {
         float x;
         float y;
-        if (carSlot >= maxPassengers / 2)
+        if (carSlot >= rowSize)
         {
             y = starty + incrementy;
-            x = startx - (incrementx * maxPassengers / 2);
+            x = startx - (incrementx * rowSize);
         }
         else
         {
