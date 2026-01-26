@@ -43,10 +43,6 @@ public class Routelogic : MonoBehaviour
             if (routes[currentRoute].route.Contains(RoundedVector(pos)))//Get index
             {
                 currentIndex = routes[currentRoute].route.IndexOf(RoundedVector(pos));
-                if (currentIndex <= routes[currentRoute].route.Count - 1)
-                {
-                    //currentRoute = currentRoute + 1;
-                }
             }
             else
             {
@@ -58,6 +54,7 @@ public class Routelogic : MonoBehaviour
                 clicking = true;
                 AddRouteWaypoint(hit.transform.position, currentIndex + 1, true);
                 routes[currentRoute].lR.SetPositions(routes[currentRoute].route.ToArray());
+                currentIndex++;
             }
             else if (hit.collider != null && routes[currentRoute].route.Count == 0)//First waypoint
             {
@@ -67,6 +64,7 @@ public class Routelogic : MonoBehaviour
                 AddRouteWaypoint(hit.transform.position, currentIndex, true);
                 routes[currentRoute].lR.SetPositions(routes[currentRoute].route.ToArray());
             }
+           
         }
 
         //--------------------
@@ -84,7 +82,7 @@ public class Routelogic : MonoBehaviour
             {
                 if (currentIndex != 0) 
                 {
-                    ChangePos(currentIndex, routes[currentRoute].route[currentIndex-1]); 
+                    ChangePos(currentIndex, routes[currentRoute].route[currentIndex - 1]); 
                 }else
                 {
                     ChangePos(currentIndex, routes[currentRoute].route[currentIndex + 1]);
@@ -164,26 +162,10 @@ public class Routelogic : MonoBehaviour
         routes[currentRoute].lR.positionCount = routes[currentRoute].route.Count;
         routes[currentRoute].lR.SetPositions(routes[currentRoute].route.ToArray());
     }
-    void AddRouteWaypoint(Vector3 _pos, int _index)
-    {
-        if (routes[currentRoute].route.Contains(_pos))
-        {
-            return;
-        }
-        if (routes[currentRoute].route.Count < 2)
-        {
-            AddRouteWaypoint(_pos);
-        }
-        else
-        {
-            routes[currentRoute].route.Insert(_index, _pos);
-        }
-        routes[currentRoute].lR.positionCount = routes[currentRoute].route.Count;
-        routes[currentRoute].lR.SetPositions(routes[currentRoute].route.ToArray());
-    }
+
     void AddRouteWaypoint(Vector3 _pos, int _index, bool _override)
     {
-        routes[currentRoute].route.Add(_pos);
+        routes[currentRoute].route.Insert(_index, _pos);
         routes[currentRoute].lR.positionCount = routes[currentRoute].route.Count;
         routes[currentRoute].lR.SetPositions(routes[currentRoute].route.ToArray());
     }
