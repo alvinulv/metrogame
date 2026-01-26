@@ -7,7 +7,7 @@ public class Stations : MonoBehaviour
     public string[] people = { "null", "null", "null", "null", "null" };
     string[] possiblePeople = { "Circle", "Triangle", "Square" };
     float timeSinceLastPerson = 10;
-    int nextPersonCanSpawn = 15;
+    float nextPersonCanSpawn = 15;
     public static int NextPersonCanSpawnMin = 10;
     public static int NextPersonCanSpawnMax = 20;
     // Start is called before the first frame update
@@ -28,7 +28,7 @@ public class Stations : MonoBehaviour
                     people[i] = whatPersonShouldSpawn();
                     //Debug.Log("new " + people[i] + " appeared");
                     timeSinceLastPerson = 0;
-                    nextPersonCanSpawn = Random.Range(10, 20);
+                    nextPersonCanSpawn = Random.Range(NextPersonCanSpawnMin * 100, NextPersonCanSpawnMax * 100) / 100f;
                     transform.Find(people[i] + " (" + i + ")").GetComponent<SpriteRenderer>().enabled = true;
                     return;
                 }
