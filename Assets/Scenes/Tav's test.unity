@@ -472,6 +472,7 @@ MonoBehaviour:
   routes: []
   currentRoute: 0
   currentIndex: -1
+  baseRouteColour: {fileID: 2100000, guid: e7d48ba91921da7439138a6f46f692bf, type: 2}
 --- !u!4 &851528969
 Transform:
   m_ObjectHideFlags: 0

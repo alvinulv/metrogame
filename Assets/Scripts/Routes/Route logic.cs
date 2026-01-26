@@ -16,7 +16,7 @@ public class Routelogic : MonoBehaviour
     [NonSerialized]public bool isLoop;
     [Header("Debug")]
     bool clicking;
-    Material baseRouteColour;
+    [SerializeField] Material baseRouteColour;
     private void Awake()
     {
         Routelogic_ = this;
@@ -42,7 +42,8 @@ public class Routelogic : MonoBehaviour
         {
             if (routes[currentRoute].route.Contains(RoundedVector(pos)))//Get index
             {
-                currentIndex = routes[currentRoute].route.IndexOf(RoundedVector(pos));
+                //currentIndex = routes[currentRoute].route.IndexOf(RoundedVector(pos));
+                currentIndex = routes[currentRoute].route.Count - 1;
             }
             else
             {

@@ -15,6 +15,8 @@ public class Route
         lR = _lR;
         lR.numCornerVertices = 2;
         lR.material = _mat;
-        
+        lR.startWidth = 0.5f;
+        lR.endWidth = 0.5f;
+        lR.sortingOrder = 10;
     }
 }
