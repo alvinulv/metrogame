@@ -100,7 +100,7 @@ public class Routelogic : MonoBehaviour
             routes[currentRoute].route.RemoveAt(currentIndex);
             if (routes[currentRoute].route.Count > 0 && !routes[currentRoute].route.Contains(_temp))
             {
-                routes[currentRoute].route.Add(_temp);
+                routes[currentRoute].route.Insert(currentIndex,_temp);
             }
             if (hit.collider == null)
             {
