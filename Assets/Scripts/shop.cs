@@ -12,6 +12,7 @@ public class shop : MonoBehaviour
     public GameObject priceDisplay3;
     public GameObject priceDisplay4;
     public GameObject priceDisplay5;
+    public GameObject moneyDisplay;
     public static int money = 20000;
     EventSystem eventSystem;
     int upgradePrice1 = 50;
@@ -28,12 +29,13 @@ public class shop : MonoBehaviour
         priceDisplay3.GetComponent<TMP_Text>().text = upgradePrice3.ToString();
         priceDisplay4.GetComponent<TMP_Text>().text = upgradePrice4.ToString();
         priceDisplay5.GetComponent<TMP_Text>().text = upgradePrice5.ToString();
+        moneyDisplay.GetComponent<TMP_Text>().text = "money: " + money.ToString();
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        moneyDisplay.GetComponent<TMP_Text>().text = "money: " + money.ToString();
     }
     public void MoreRoutes()
     {
