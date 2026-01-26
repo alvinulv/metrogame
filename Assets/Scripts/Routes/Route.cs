@@ -17,6 +17,6 @@ public class Route
         lR.material = _mat;
         lR.startWidth = 0.5f;
         lR.endWidth = 0.5f;
-        lR.sortingOrder = 10;
+        lR.sortingOrder =0;
     }
 }
