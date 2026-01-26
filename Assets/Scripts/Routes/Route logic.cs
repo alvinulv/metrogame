@@ -1,7 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Routelogic : MonoBehaviour
@@ -10,21 +10,20 @@ public class Routelogic : MonoBehaviour
     [SerializeField] float clickerRadius = 0.5f;
     [SerializeField] LayerMask stationLayer;
     public RaycastHit2D hit;
-    LineRenderer lR;
     [SerializeField] public List<Route> routes = new List<Route>();
     public int currentRoute = 0;
-    int currentIndex = -1;
+    public int currentIndex = -1;
     [NonSerialized]public bool isLoop;
     [Header("Debug")]
     bool clicking;
+    Material baseRouteColour;
     private void Awake()
     {
         Routelogic_ = this;
     }
     void Start()
     {
-        AddRoute();
-        lR = GetComponent<LineRenderer>();
+        AddRoute(baseRouteColour);
     }
     void Update()
     {
@@ -54,7 +53,7 @@ public class Routelogic : MonoBehaviour
             {
                 clicking = true;
                 AddRouteWaypoint(hit.transform.position, currentIndex + 1, true);
-                lR.SetPositions(routes[currentRoute].route.ToArray());
+                routes[currentRoute].lR.SetPositions(routes[currentRoute].route.ToArray());
             }
             else if (hit.collider != null && routes[currentRoute].route.Count == 0)//First waypoint
             {
@@ -62,7 +61,7 @@ public class Routelogic : MonoBehaviour
                 AddRouteWaypoint(hit.transform.position);
                 currentIndex = 1;
                 AddRouteWaypoint(hit.transform.position, currentIndex, true);
-                lR.SetPositions(routes[currentRoute].route.ToArray());
+                routes[currentRoute].lR.SetPositions(routes[currentRoute].route.ToArray());
             }
         }
         //--------------------
@@ -91,10 +90,10 @@ public class Routelogic : MonoBehaviour
             {
                 routes[currentRoute].route.Clear();
             }
-            lR.SetPositions(routes[currentRoute].route.ToArray());
+            routes[currentRoute].lR.SetPositions(routes[currentRoute].route.ToArray());
             if (routes[currentRoute].route.Count == 0)
             {
-                lR.positionCount = 0;
+                routes[currentRoute].lR.positionCount = 0;
             }
         }
     }
@@ -129,10 +128,10 @@ public class Routelogic : MonoBehaviour
             {
                 routes[currentRoute].route.Insert(currentIndex, _temp);
             }
-            lR.SetPositions(routes[currentRoute].route.ToArray());
+            routes[currentRoute].lR.SetPositions(routes[currentRoute].route.ToArray());
             if (routes[currentRoute].route.Count == 0)//debug for if rWp is empty
             {
-                lR.positionCount = 0;
+                routes[currentRoute].lR.positionCount = 0;
             }
         }
     }
@@ -144,8 +143,8 @@ public class Routelogic : MonoBehaviour
             return;
         }
         routes[currentRoute].route.Add(_pos);
-        lR.positionCount = routes[currentRoute].route.Count;
-        lR.SetPositions(routes[currentRoute].route.ToArray());
+        routes[currentRoute].lR.positionCount = routes[currentRoute].route.Count;
+        routes[currentRoute].lR.SetPositions(routes[currentRoute].route.ToArray());
     }
     void AddRouteWaypoint(Vector3 _pos, int _index)
     {
@@ -161,14 +160,14 @@ public class Routelogic : MonoBehaviour
         {
             routes[currentRoute].route.Insert(_index, _pos);
         }
-        lR.positionCount = routes[currentRoute].route.Count;
-        lR.SetPositions(routes[currentRoute].route.ToArray());
+        routes[currentRoute].lR.positionCount = routes[currentRoute].route.Count;
+        routes[currentRoute].lR.SetPositions(routes[currentRoute].route.ToArray());
     }
     void AddRouteWaypoint(Vector3 _pos, int _index, bool _override)
     {
         routes[currentRoute].route.Add(_pos);
-        lR.positionCount = routes[currentRoute].route.Count;
-        lR.SetPositions(routes[currentRoute].route.ToArray());
+        routes[currentRoute].lR.positionCount = routes[currentRoute].route.Count;
+        routes[currentRoute].lR.SetPositions(routes[currentRoute].route.ToArray());
     }
     Vector3 RoundedVector(Vector3 _pos)
     {
@@ -177,10 +176,12 @@ public class Routelogic : MonoBehaviour
     void ChangePos(int _index, Vector3 _pos)
     {
         routes[currentRoute].route[_index] = _pos;
-        lR.SetPositions(routes[currentRoute].route.ToArray());
+        routes[currentRoute].lR.SetPositions(routes[currentRoute].route.ToArray());
     }
-    public static void AddRoute()
+    public static void AddRoute(Material _mat)
     {
-        Routelogic_.routes.Add(new Route());
+        GameObject _tempObj = Instantiate(new GameObject(),Routelogic_.transform);
+        LineRenderer _temp = _tempObj.AddComponent<LineRenderer>();
+        Routelogic_.routes.Add(new Route(_temp, _mat));
     }
 }

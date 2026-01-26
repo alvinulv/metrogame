@@ -469,10 +469,9 @@ MonoBehaviour:
   stationLayer:
     serializedVersion: 2
     m_Bits: 64
-  rWp: []
-  baseWaypoint: {fileID: 6533094328314994640, guid: 5522553ce6d6917408e3262637c247f1, type: 3}
-  removeFirst: 0
-  removeLast: 0
+  routes: []
+  currentRoute: 0
+  currentIndex: -1
 --- !u!4 &851528969
 Transform:
   m_ObjectHideFlags: 0
