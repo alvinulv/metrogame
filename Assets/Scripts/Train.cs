@@ -7,7 +7,8 @@ using UnityEngine;
 public class Train : MonoBehaviour
 {
     //Object.Instantiate(train).GetComponent<Train>().Route =
-    
+    [SerializeField] GameObject carPrefab;
+    [SerializeField] GameObject carPrefab2;
     [Header("Movement")]
     public GameObject Route;
     Routelogic Routelogic;
@@ -19,6 +20,7 @@ public class Train : MonoBehaviour
     public List<TrainCar> cars = new List<TrainCar>();
     bool reverse;
     [HideInInspector] public float stopped;
+    
     //List<int> removed;
     
     // Start is called before the first frame update
@@ -33,6 +35,8 @@ public class Train : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (Input.GetKeyDown(KeyCode.L))
+            NewCar();
         //Moving the train along the route
         if (stopped <= 0)
         {
@@ -75,6 +79,35 @@ public class Train : MonoBehaviour
             }
         }
         else stopped -= Time.deltaTime;
+    }
+    void NewCar()
+    {
+        switch (cars.Count)
+        {
+            case 1:
+                cars[0].transform.position += new Vector3(0,0.16f);
+                cars.Add(Object.Instantiate(carPrefab,this.transform).GetComponent<TrainCar>());
+                cars[1].transform.position += new Vector3(0, -0.16f);
+                cars[1].train = this;   
+                break;
+            case 2:
+                cars.Add(Object.Instantiate(carPrefab2, this.transform).GetComponent<TrainCar>());
+                cars[2].train = this;
+                cars[2].transform.position += new Vector3(0.48f, 0);
+                break;
+            case 3:
+                cars.Add(Object.Instantiate(carPrefab2, this.transform).GetComponent<TrainCar>());
+                cars[3].train = this;
+                cars[3].transform.position += new Vector3(0.80f, 0);
+                break;
+            case 4:
+                cars.Add(Object.Instantiate(carPrefab2, this.transform).GetComponent<TrainCar>());
+                cars[4].train = this;
+                cars[4].transform.position += new Vector3(-0.48f, 0);
+                break;
+            default:break;
+        }
+        
     }
     private void OnCollisionEnter2D(Collision2D collision)
     {
