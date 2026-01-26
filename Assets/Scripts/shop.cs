@@ -20,6 +20,7 @@ public class shop : MonoBehaviour
     int upgradePrice3 = 10;
     int upgradePrice4 = 10;
     int upgradePrice5 = 100;
+    int routes = 1;
     // Start is called before the first frame update
     void Start()
     {
@@ -39,10 +40,11 @@ public class shop : MonoBehaviour
     }
     public void MoreRoutes()
     {
-        if (money >= upgradePrice1)
+        if (money >= upgradePrice1 && routes < 4)
         {
             money = money - upgradePrice1;
             Routelogic.AddRoute();
+            routes++;
             float temp = (float)(upgradePrice1 * 1.2f);
             upgradePrice1 = (int)temp;
             Debug.Log(upgradePrice1);
