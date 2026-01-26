@@ -12,7 +12,7 @@ public class shop : MonoBehaviour
     public GameObject priceDisplay3;
     public GameObject priceDisplay4;
     public GameObject priceDisplay5;
-    public static int money = 1000;
+    public static int money = 20000;
     EventSystem eventSystem;
     int upgradePrice1 = 50;
     int upgradePrice2 = 25;
@@ -65,6 +65,7 @@ public class shop : MonoBehaviour
         if (money >= upgradePrice3)
         {
             money = money - upgradePrice3;
+            Train.speed = Train.speed * 1.1f;
             float temp = (float)(upgradePrice3 * 1.2f);
             upgradePrice3 = (int)temp;
             Debug.Log(upgradePrice3);
@@ -86,22 +87,33 @@ public class shop : MonoBehaviour
     }
     public void Adverticement()
     {
-        if (money >= upgradePrice5)
+        if (money >= upgradePrice5 && Stations.NextPersonCanSpawnMax > 2)
         {
             money = money - upgradePrice5;
-            if (Stations.NextPersonCanSpawnMin! <= 1)
+            if (Stations.NextPersonCanSpawnMin > 1)
             {
                 Stations.NextPersonCanSpawnMin--;
                 Stations.NextPersonCanSpawnMax--;
+                float temp = (float)(upgradePrice5 * 1.2f);
+                upgradePrice5 = (int)temp;
+                Debug.Log(upgradePrice5);
+                priceDisplay5.GetComponent<TMP_Text>().text = upgradePrice5.ToString();
             }
-            else if (Stations.NextPersonCanSpawnMax! <= 2)
+            else if (Stations.NextPersonCanSpawnMax > 2)
             {
                 Stations.NextPersonCanSpawnMax--;
+                if (Stations.NextPersonCanSpawnMax == 2)
+                {
+                    priceDisplay5.GetComponent<TMP_Text>().text = "max";
+                }
+                else
+                {
+                    float temp = (float)(upgradePrice5 * 1.2f);
+                    upgradePrice5 = (int)temp;
+                    Debug.Log(upgradePrice5);
+                    priceDisplay5.GetComponent<TMP_Text>().text = upgradePrice5.ToString();
+                }
             }
-            float temp = (float)(upgradePrice5 * 1.2f);
-            upgradePrice5 = (int)temp;
-            Debug.Log(upgradePrice5);
-            priceDisplay5.GetComponent<TMP_Text>().text = upgradePrice5.ToString();
         }
         eventSystem.SetSelectedGameObject(null);
     }
