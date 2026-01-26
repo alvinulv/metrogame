@@ -12,7 +12,7 @@ public class shop : MonoBehaviour
     public GameObject priceDisplay3;
     public GameObject priceDisplay4;
     public GameObject priceDisplay5;
-    public static int money;
+    public static int money = 1000;
     EventSystem eventSystem;
     int upgradePrice1 = 50;
     int upgradePrice2 = 25;
@@ -39,9 +39,11 @@ public class shop : MonoBehaviour
     {
         if (money >= upgradePrice1)
         {
-            money =- upgradePrice1;
+            money = money - upgradePrice1;
             Routelogic.AddRoute();
-            upgradePrice1 = (int)(upgradePrice1 * 1.2f);
+            float temp = (float)(upgradePrice1 * 1.2f);
+            upgradePrice1 = (int)temp;
+            Debug.Log(upgradePrice1);
             priceDisplay1.GetComponent<TMP_Text>().text = upgradePrice1.ToString();
         }
         eventSystem.SetSelectedGameObject(null);
@@ -50,8 +52,10 @@ public class shop : MonoBehaviour
     {
         if (money >= upgradePrice2)
         {
-            money =- upgradePrice2;
-            upgradePrice2 = (int)(upgradePrice2 * 1.2f);
+            money = money - upgradePrice2;
+            float temp = (float)(upgradePrice2 * 1.2f);
+            upgradePrice2 = (int)temp;
+            Debug.Log(upgradePrice2); 
             priceDisplay2.GetComponent<TMP_Text>().text = upgradePrice2.ToString();
         }
         eventSystem.SetSelectedGameObject(null);
@@ -60,8 +64,10 @@ public class shop : MonoBehaviour
     {
         if (money >= upgradePrice3)
         {
-            money =- upgradePrice3;
-            upgradePrice3 = (int)(upgradePrice3 * 1.2f);
+            money = money - upgradePrice3;
+            float temp = (float)(upgradePrice3 * 1.2f);
+            upgradePrice3 = (int)temp;
+            Debug.Log(upgradePrice3);
             priceDisplay3.GetComponent<TMP_Text>().text = upgradePrice3.ToString();
         }
         eventSystem.SetSelectedGameObject(null);
@@ -70,8 +76,10 @@ public class shop : MonoBehaviour
     {
         if (money >= upgradePrice4)
         {
-            money =- upgradePrice4;
-            upgradePrice4 = (int)(upgradePrice4 * 1.2f);
+            money = money - upgradePrice4;
+            float temp = (float)(upgradePrice4 * 1.2f);
+            upgradePrice4 = (int)temp;
+            Debug.Log(upgradePrice4);
             priceDisplay4.GetComponent<TMP_Text>().text = upgradePrice4.ToString();
         }
         eventSystem.SetSelectedGameObject(null);
@@ -80,7 +88,7 @@ public class shop : MonoBehaviour
     {
         if (money >= upgradePrice5)
         {
-            money =- upgradePrice5;
+            money = money - upgradePrice5;
             if (Stations.NextPersonCanSpawnMin! <= 1)
             {
                 Stations.NextPersonCanSpawnMin--;
@@ -90,7 +98,9 @@ public class shop : MonoBehaviour
             {
                 Stations.NextPersonCanSpawnMax--;
             }
-            upgradePrice5 = (int)(upgradePrice5 * 1.2f);
+            float temp = (float)(upgradePrice5 * 1.2f);
+            upgradePrice5 = (int)temp;
+            Debug.Log(upgradePrice5);
             priceDisplay5.GetComponent<TMP_Text>().text = upgradePrice5.ToString();
         }
         eventSystem.SetSelectedGameObject(null);
