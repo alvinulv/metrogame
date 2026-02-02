@@ -18,6 +18,7 @@ public class Train : MonoBehaviour
     [SerializeField] float mindist = 0.1f;
     public float stopfortime = 0.5f;
     public List<TrainCar> cars = new List<TrainCar>();
+    public static int size = 1;
     bool reverse;
     [HideInInspector] public float stopped;
     
@@ -34,12 +35,13 @@ public class Train : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.L))
+        Debug.Log(size);
+        while (size > cars.Count && size < 6)
             NewCar();
         //Moving the train along the route
         if (stopped <= 0)
         {
-            transform.position = transform.position + (nextWaypoint - transform.position).normalized * speed*Time.deltaTime;
+            transform.position = transform.position + (nextWaypoint - transform.position).normalized * speed * Time.deltaTime;
             if ((nextWaypoint - transform.position).magnitude < mindist)
             {
                 //Runs when a waypoint is reached
@@ -75,7 +77,7 @@ public class Train : MonoBehaviour
                         }
                 }
                 if (Routelogic.routes[route] != null)
-                nextWaypoint = Routelogic.routes[route].route[index];
+                    nextWaypoint = Routelogic.routes[route].route[index];
             }
         }
         else stopped -= Time.deltaTime;
@@ -109,23 +111,5 @@ public class Train : MonoBehaviour
         }
         
     }
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        
-        {
-            /*if (emptySlots.Count > 0)
-                if (!passengers.Contains(collision.gameObject))
-                {
-                    newPassenger(collision.gameObject);
-                }*/
-        }
-        /*if (collision.gameObject.layer ==6)
-        {
-            foreach (TrainCar car in cars)
-            {
-                car.ReachedStop(collision.gameObject);
-            }
-            
-        }*/
-    }
+    
 }
