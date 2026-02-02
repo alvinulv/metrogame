@@ -31,16 +31,12 @@ public class GameManagement : MonoBehaviour
     }
     public void AddRouteButton(Material _mat)
     {
-        if (i < 4)
-        {
-            GameObject button = Object.Instantiate(routebutton);
-            button.transform.parent = this.transform;
-            button.GetComponent<RectTransform>().localPosition = new Vector2(-144, 90 - (i * 21));
-            button.GetComponent<RouteButton>().route = i;
-            button.GetComponent<Image>().material = _mat;
-            i++;
-            button.GetComponentInChildren<TMP_Text>().text = "Route " + i;
-        }
-        
+        GameObject button = Object.Instantiate(routebutton, this.transform);
+        button.GetComponent<RectTransform>().localPosition = new Vector2(-380, 232 - (i * 50));
+        button.GetComponent<RouteButton>().route = i;
+        if (_mat != null)
+            button.GetComponent<Image>().color = _mat.color;
+        i++;
+        button.GetComponentInChildren<TMP_Text>().text = "Route " + i;
     }
 }
