@@ -49,6 +49,6 @@ MonoBehaviour:
   - {fileID: 2186161368206073949, guid: 859f2dd738aa9b8429fcce72f99b18aa, type: 3}
   - {fileID: 8324163087160365532, guid: cdfebcd3c7ad93048ba3d48cc0e14d9a, type: 3}
   maxStations: 9
-  xbound: 8
-  ybound: 4
+  xbound: 3
+  ybound: 2
   frequency: 14

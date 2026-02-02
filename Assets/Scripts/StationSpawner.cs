@@ -18,8 +18,8 @@ public class StationSpawner : MonoBehaviour
         for (int i = 0; i < stationPrefabs.Length; i++)
         {
             stationsToSpawn.Add(stationPrefabs[i]);
+            SpawnStation();
         }
-        SpawnStation();
     }
 
     // Update is called once per frame
