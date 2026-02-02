@@ -100,22 +100,30 @@ public class Routelogic : MonoBehaviour
 
         if (Input.GetMouseButtonUp(0))
         {
+            if (clicking)
+            {
+                Vector3 _temp = routes[currentRoute].route[currentIndex];
+                routes[currentRoute].route.RemoveAt(currentIndex);
+                if (routes[currentRoute].route.Count > 0 && !routes[currentRoute].route.Contains(_temp) && hit.collider != null)
+                {
+                    routes[currentRoute].route.Insert(currentIndex, _temp);
+                }
+                if (hit.collider != null && hit.collider.transform.tag == "Trash")
+                {
+                    routes[currentRoute].route.Clear();
+                }
+                if (routes[currentRoute].route.Count == 0)
+                {
+                    routes[currentRoute].lR.positionCount = 0;
+                }
+                else
+                {
+
+                    routes[currentRoute].lR.positionCount = routes[currentRoute].route.Count;
+                    routes[currentRoute].lR.SetPositions(routes[currentRoute].route.ToArray());
+                }
+            }
             clicking = false;
-            Vector3 _temp = routes[currentRoute].route[currentIndex];
-            routes[currentRoute].route.RemoveAt(currentIndex);
-            if (routes[currentRoute].route.Count > 0 && !routes[currentRoute].route.Contains(_temp))
-            {
-                routes[currentRoute].route.Insert(currentIndex,_temp);
-            }
-            if (hit.collider.transform.tag == "Trash")
-            {
-                routes[currentRoute].route.Clear();
-            }
-            routes[currentRoute].lR.SetPositions(routes[currentRoute].route.ToArray());
-            if (routes[currentRoute].route.Count == 0)
-            {
-                routes[currentRoute].lR.positionCount = 0;
-            }
         }
     }
 
