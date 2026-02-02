@@ -107,7 +107,7 @@ public class Routelogic : MonoBehaviour
             {
                 routes[currentRoute].route.Insert(currentIndex,_temp);
             }
-            if (hit.collider == null)
+            if (hit.collider.transform.tag == "Trash")
             {
                 routes[currentRoute].route.Clear();
             }
