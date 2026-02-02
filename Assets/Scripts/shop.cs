@@ -13,13 +13,13 @@ public class shop : MonoBehaviour
     public GameObject priceDisplay4;
     public GameObject priceDisplay5;
     public GameObject moneyDisplay;
-    public static int money = 20000;
+    public static int money;
     EventSystem eventSystem;
     int upgradePrice1 = 50;
     int upgradePrice2 = 25;
     int upgradePrice3 = 10;
     int upgradePrice4 = 10;
-    int upgradePrice5 = 100;
+    int upgradePrice5 = 50;
     int routes = 1;
     // Start is called before the first frame update
     void Start()
@@ -105,7 +105,7 @@ public class shop : MonoBehaviour
             {
                 Stations.NextPersonCanSpawnMin--;
                 Stations.NextPersonCanSpawnMax--;
-                float temp = (float)(upgradePrice5 * 1.2f);
+                float temp = (float)(upgradePrice5 * 1.4f);
                 upgradePrice5 = (int)temp;
                 Debug.Log(upgradePrice5);
                 priceDisplay5.GetComponent<TMP_Text>().text = upgradePrice5.ToString();
