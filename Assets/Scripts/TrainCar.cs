@@ -63,9 +63,9 @@ public class TrainCar : MonoBehaviour
                     switch (station.people[i])
                     {
                         case "null": break;
-                        case "Square": newPassenger(squarePassenger, i, j, station); break;
-                        case "Circle": newPassenger(circlePassenger, i, j, station); break;
-                        case "Triangle": newPassenger(trianglePassenger, i, j, station); break;
+                        case "Square": NewPassenger(squarePassenger, i, j, station); break;
+                        case "Circle": NewPassenger(circlePassenger, i, j, station); break;
+                        case "Triangle": NewPassenger(trianglePassenger, i, j, station); break;
                         default: break;
                     }
 
@@ -75,7 +75,7 @@ public class TrainCar : MonoBehaviour
         station.people = station.listOfPassengersUpdate(station.people);
         lastStop = stop;
     }
-    void newPassenger(GameObject passenger, int stationSlot, int carSlot, Stations station)
+    void NewPassenger(GameObject passenger, int stationSlot, int carSlot, Stations station)
     {
         float x;
         float y;

@@ -189,5 +189,6 @@ public class Routelogic : MonoBehaviour
         GameObject _tempObj = Instantiate(new GameObject(),Routelogic_.transform);
         LineRenderer _temp = _tempObj.AddComponent<LineRenderer>();
         Routelogic_.routes.Add(new Route(_temp, _mat));
+        GameObject.Find("Canvas").GetComponent<GameManagement>().AddRouteButton(_mat);
     }
 }

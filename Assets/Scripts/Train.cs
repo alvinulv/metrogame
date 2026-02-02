@@ -80,7 +80,7 @@ public class Train : MonoBehaviour
         }
         else stopped -= Time.deltaTime;
     }
-    void NewCar()
+    public void NewCar()
     {
         switch (cars.Count)
         {
