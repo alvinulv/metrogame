@@ -40,15 +40,22 @@ public class shop : MonoBehaviour
     }
     public void MoreRoutes()
     {
+
         if (money >= upgradePrice1 && routes < 4)
         {
+            routes++;
             money = money - upgradePrice1;
             Routelogic.addRoute = true;
-            routes++;
-            float temp = (float)(upgradePrice1 * 1.2f);
-            upgradePrice1 = (int)temp;
-            Debug.Log(upgradePrice1);
-            priceDisplay1.GetComponent<TMP_Text>().text = upgradePrice1.ToString();
+            if (routes < 4)
+            {
+                float temp = (float)(upgradePrice1 * 2);
+                upgradePrice1 = (int)temp;
+                priceDisplay1.GetComponent<TMP_Text>().text = upgradePrice1.ToString();
+            }
+            else if (routes == 4)
+            {
+                priceDisplay1.GetComponent<TMP_Text>().text = "max";
+            }
         }
         eventSystem.SetSelectedGameObject(null);
     }
@@ -114,7 +121,6 @@ public class shop : MonoBehaviour
                 {
                     float temp = (float)(upgradePrice5 * 1.2f);
                     upgradePrice5 = (int)temp;
-                    Debug.Log(upgradePrice5);
                     priceDisplay5.GetComponent<TMP_Text>().text = upgradePrice5.ToString();
                 }
             }
