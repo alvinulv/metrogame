@@ -70,7 +70,15 @@ public class Routelogic : MonoBehaviour
                 AddRouteWaypoint(hit.transform.position, currentIndex, true);
                 routes[currentRoute].lR.SetPositions(routes[currentRoute].route.ToArray());
             }
-           
+            if (hit.collider == null)
+            {
+                routes[currentRoute].route.Clear();
+            }
+            routes[currentRoute].lR.SetPositions(routes[currentRoute].route.ToArray());
+            if (routes[currentRoute].route.Count == 0)
+            {
+                routes[currentRoute].lR.positionCount = 0;
+            }
         }
 
         //--------------------
@@ -108,15 +116,15 @@ public class Routelogic : MonoBehaviour
             {
                 routes[currentRoute].route.Insert(currentIndex,_temp);
             }
-            if (hit.collider == null)
+            /*if (hit.collider == null)
             {
                 routes[currentRoute].route.Clear();
-            }
+            }*/
             routes[currentRoute].lR.SetPositions(routes[currentRoute].route.ToArray());
-            if (routes[currentRoute].route.Count == 0)
+            /*if (routes[currentRoute].route.Count == 0)
             {
                 routes[currentRoute].lR.positionCount = 0;
-            }
+            }*/
         }
     }
 
