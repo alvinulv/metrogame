@@ -44,7 +44,7 @@ public class shop : MonoBehaviour
         if (money >= upgradePrice1 && routes < 4)
         {
             routes++;
-            money = money - upgradePrice1;
+            money -= upgradePrice1;
             Routelogic.AddRoute(null);
             if (routes < 4)
             {
@@ -63,7 +63,7 @@ public class shop : MonoBehaviour
     {
         if (money >= upgradePrice2)
         {
-            money = money - upgradePrice2;
+            money -= upgradePrice2;
             float temp = (float)(upgradePrice2 * 1.2f);
             upgradePrice2 = (int)temp;
             Debug.Log(upgradePrice2); 
@@ -75,7 +75,7 @@ public class shop : MonoBehaviour
     {
         if (money >= upgradePrice3)
         {
-            money = money - upgradePrice3;
+            money -= upgradePrice3;
             Train.speed = Train.speed * 1.1f;
             float temp = (float)(upgradePrice3 * 1.2f);
             upgradePrice3 = (int)temp;
@@ -88,7 +88,7 @@ public class shop : MonoBehaviour
     {
         if (money >= upgradePrice4)
         {
-            money = money - upgradePrice4;
+            money -= upgradePrice4;
             float temp = (float)(upgradePrice4 * 1.2f);
             upgradePrice4 = (int)temp;
             Debug.Log(upgradePrice4);
@@ -100,7 +100,7 @@ public class shop : MonoBehaviour
     {
         if (money >= upgradePrice5 && Stations.NextPersonCanSpawnMax > 2)
         {
-            money = money - upgradePrice5;
+            money -= upgradePrice5;
             if (Stations.NextPersonCanSpawnMin > 1)
             {
                 Stations.NextPersonCanSpawnMin--;
