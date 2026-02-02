@@ -43,7 +43,7 @@ public class shop : MonoBehaviour
         if (money >= upgradePrice1 && routes < 4)
         {
             money = money - upgradePrice1;
-            //Routelogic.AddRoute();
+            Routelogic.addRoute = true;
             routes++;
             float temp = (float)(upgradePrice1 * 1.2f);
             upgradePrice1 = (int)temp;

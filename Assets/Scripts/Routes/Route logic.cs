@@ -15,7 +15,7 @@ public class Routelogic : MonoBehaviour
     public int currentIndex = -1;
     [NonSerialized]public bool isLoop;
     [Header("Debug")]
-    public bool addRoute;
+    public static bool addRoute;
     bool clicking;
     [SerializeField] Material baseRouteColour;
     private void Awake()
