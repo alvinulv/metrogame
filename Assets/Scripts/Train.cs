@@ -10,11 +10,11 @@ public class Train : MonoBehaviour
     [SerializeField] GameObject carPrefab;
     [SerializeField] GameObject carPrefab2;
     [Header("Movement")]
-    [SerializeField] int route;
+    public int route;
     Routelogic Routelogic;
     Vector3 nextWaypoint;
     int index;
-    public static float speed = 0.01f;
+    public static float speed = 0.8f;
     [SerializeField] float mindist = 0.1f;
     public float stopfortime = 0.5f;
     public List<TrainCar> cars = new List<TrainCar>();
@@ -39,7 +39,7 @@ public class Train : MonoBehaviour
         //Moving the train along the route
         if (stopped <= 0)
         {
-            transform.position = transform.position + (nextWaypoint - transform.position).normalized * speed;
+            transform.position = transform.position + (nextWaypoint - transform.position).normalized * speed*Time.deltaTime;
             if ((nextWaypoint - transform.position).magnitude < mindist)
             {
                 //Runs when a waypoint is reached

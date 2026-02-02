@@ -48,7 +48,7 @@ public class StationSpawner : MonoBehaviour
     }
     Vector3 FindSpawn()
     {
-        Vector3 temp = new Vector3(Random.Range(-xbound, xbound), Random.Range(-ybound, ybound), 0);
+        Vector3 temp = new Vector3(2*Random.Range(-xbound, xbound),2*Random.Range(-ybound, ybound), 0);
         foreach (GameObject station in stationList)
         {
             if (station.transform.position == temp)
