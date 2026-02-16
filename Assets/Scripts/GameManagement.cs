@@ -36,7 +36,7 @@ public class GameManagement : MonoBehaviour
         GameObject button = Object.Instantiate(routebutton, this.transform);
         Train t = Object.Instantiate(trainPrefab).GetComponent<Train>();
         t.route = i;
-        button.GetComponent<RectTransform>().localPosition = new Vector2(-380, 232 - (i * 50));
+        button.GetComponent<RectTransform>().localPosition = new Vector2(-320, 193 - (i * 50));
         button.GetComponent<RouteButton>().route = i;
         if (_mat != null)
             button.GetComponent<Image>().color = _mat.color;
