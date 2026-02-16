@@ -13,7 +13,7 @@ public class Stations : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
@@ -70,7 +70,7 @@ public class Stations : MonoBehaviour
     }
     public string[] listOfPassengersUpdate(string[] passengers)
     {
-        for (int i = 0; i < passengers.Length-1; i++)
+        for (int i = 0; i < passengers.Length - 1; i++)
         {
             if (passengers[i] == "null" && passengers[i + 1] != "null")
             {
@@ -80,10 +80,10 @@ public class Stations : MonoBehaviour
         }
         for (int i = 0; i < passengers.Length; i++)
         {
-            for(int j = 0; j < 3; j++)
+            for (int j = 0; j < 3; j++)
             {
                 transform.Find(possiblePeople[j] + " (" + i + ")").GetComponent<SpriteRenderer>().enabled = false;
-            }   
+            }
             if (passengers[i] != "null") transform.Find(passengers[i] + " (" + i + ")").GetComponent<SpriteRenderer>().enabled = true;
 
         }
