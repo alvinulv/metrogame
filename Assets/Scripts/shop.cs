@@ -17,7 +17,7 @@ public class shop : MonoBehaviour
     int upgradePrice1 = 50;
     int upgradePrice3 = 10;
     int upgradePrice4 = 10;
-    int upgradePrice5 = 50;
+    int upgradePrice5 = 20;
     int routes = 1;
     int trainsize = 1;
     // Start is called before the first frame update
@@ -114,7 +114,7 @@ public class shop : MonoBehaviour
             {
                 Stations.NextPersonCanSpawnMin--;
                 Stations.NextPersonCanSpawnMax--;
-                float temp = (float)(upgradePrice5 * 1.4f);
+                float temp = (float)(upgradePrice5 * 1.2f);
                 upgradePrice5 = (int)temp;
                 Debug.Log(upgradePrice5);
                 priceDisplay5.GetComponent<TMP_Text>().text = upgradePrice5.ToString();
@@ -128,7 +128,7 @@ public class shop : MonoBehaviour
                 }
                 else
                 {
-                    float temp = (float)(upgradePrice5 * 1.2f);
+                    float temp = (float)(upgradePrice5 * 1.1f);
                     upgradePrice5 = (int)temp;
                     priceDisplay5.GetComponent<TMP_Text>().text = upgradePrice5.ToString();
                 }
