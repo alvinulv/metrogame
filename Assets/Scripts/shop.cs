@@ -8,7 +8,6 @@ using TMPro;
 public class shop : MonoBehaviour
 {
     public GameObject priceDisplay1;
-    public GameObject priceDisplay2;
     public GameObject priceDisplay3;
     public GameObject priceDisplay4;
     public GameObject priceDisplay5;
@@ -16,7 +15,6 @@ public class shop : MonoBehaviour
     public static int money;
     EventSystem eventSystem;
     int upgradePrice1 = 50;
-    int upgradePrice2 = 25;
     int upgradePrice3 = 10;
     int upgradePrice4 = 10;
     int upgradePrice5 = 50;
@@ -26,7 +24,6 @@ public class shop : MonoBehaviour
     {
         eventSystem = FindFirstObjectByType<EventSystem>();
         priceDisplay1.GetComponent<TMP_Text>().text = upgradePrice1.ToString();
-        priceDisplay2.GetComponent<TMP_Text>().text = upgradePrice2.ToString();
         priceDisplay3.GetComponent<TMP_Text>().text = upgradePrice3.ToString();
         priceDisplay4.GetComponent<TMP_Text>().text = upgradePrice4.ToString();
         priceDisplay5.GetComponent<TMP_Text>().text = upgradePrice5.ToString();
@@ -59,7 +56,7 @@ public class shop : MonoBehaviour
         }
         eventSystem.SetSelectedGameObject(null);
     }
-    public void MoreTrains()
+    /*public void MoreTrains()
     {
         if (money >= upgradePrice2)
         {
@@ -70,7 +67,7 @@ public class shop : MonoBehaviour
             priceDisplay2.GetComponent<TMP_Text>().text = upgradePrice2.ToString();
         }
         eventSystem.SetSelectedGameObject(null);
-    }
+    }*/
     public void FasterTrains()
     {
         if (money >= upgradePrice3)
