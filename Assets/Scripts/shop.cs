@@ -89,6 +89,7 @@ public class shop : MonoBehaviour
             //may still cause a crash, beaware
             money -= upgradePrice4;
             Train.size++;
+            trainsize++;
             if (trainsize < 5)
             {
                 float temp = (float)(upgradePrice4 * 1.5f);
