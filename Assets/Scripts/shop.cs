@@ -13,6 +13,7 @@ public class shop : MonoBehaviour
     public GameObject priceDisplay5;
     public GameObject moneyDisplay;
     public static int money;
+    [SerializeField] Material[] colors;
     EventSystem eventSystem;
     int upgradePrice1 = 50;
     int upgradePrice3 = 10;
@@ -43,7 +44,7 @@ public class shop : MonoBehaviour
         {
             routes++;
             money -= upgradePrice1;
-            Routelogic.AddRoute(null);
+            Routelogic.AddRoute(colors[routes-2]);
             if (routes < 4)
             {
                 float temp = (float)(upgradePrice1 * 2);

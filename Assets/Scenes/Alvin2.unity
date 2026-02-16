@@ -314,6 +314,10 @@ MonoBehaviour:
   priceDisplay4: {fileID: 499419999}
   priceDisplay5: {fileID: 1353649251}
   moneyDisplay: {fileID: 608735822}
+  colors:
+  - {fileID: 0}
+  - {fileID: 2100000, guid: dec4e7f8873e9584780c033c769f614f, type: 2}
+  - {fileID: 2100000, guid: e7d48ba91921da7439138a6f46f692bf, type: 2}
 --- !u!114 &31468239
 MonoBehaviour:
   m_ObjectHideFlags: 0
