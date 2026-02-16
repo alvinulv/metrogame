@@ -91,7 +91,7 @@ public class shop : MonoBehaviour
             Train.size++;
             if (trainsize < 5)
             {
-                float temp = (float)(upgradePrice4 * 1.2f);
+                float temp = (float)(upgradePrice4 * 1.5f);
                 upgradePrice4 = (int)temp;
                 priceDisplay4.GetComponent<TMP_Text>().text = upgradePrice4.ToString();
             }
