@@ -35,7 +35,7 @@ public class Stations : MonoBehaviour
 
             }
         }
-        if (correctionOfPassengersListNeeded(people) || correctionOfVisiblePassengersListNeeded(people))
+        if (correctionOfPassengersListNeeded(people))
         {
             people = listOfPassengersUpdate(people);
         }
@@ -55,11 +55,7 @@ public class Stations : MonoBehaviour
                 return true;
             }
         }
-        return false;
-    }
-    bool correctionOfVisiblePassengersListNeeded(string[] passengers)
-    {
-        for (int i = 0;i < passengers.Length;i++)
+        for (int i = 0; i < passengers.Length; i++)
         {
             if (passengers[i] == "null")
             {

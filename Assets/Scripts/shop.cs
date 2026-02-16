@@ -19,6 +19,7 @@ public class shop : MonoBehaviour
     int upgradePrice4 = 10;
     int upgradePrice5 = 50;
     int routes = 1;
+    int trainsize = 1;
     // Start is called before the first frame update
     void Start()
     {
@@ -83,15 +84,23 @@ public class shop : MonoBehaviour
     }
     public void BiggerTrains()
     {
-        if (money >= upgradePrice4)
+        if (money >= upgradePrice4 && trainsize < 5)
         {
             //may still cause a crash, beaware
             money -= upgradePrice4;
             Train.size++;
-            float temp = (float)(upgradePrice4 * 1.2f);
-            upgradePrice4 = (int)temp;
+            if (trainsize < 5)
+            {
+                float temp = (float)(upgradePrice4 * 1.2f);
+                upgradePrice4 = (int)temp;
+                priceDisplay4.GetComponent<TMP_Text>().text = upgradePrice4.ToString();
+            }
+            else if (trainsize == 5)
+            {
+                priceDisplay4.GetComponent<TMP_Text>().text = "max";
+            }
+
             Debug.Log(upgradePrice4);
-            priceDisplay4.GetComponent<TMP_Text>().text = upgradePrice4.ToString();
         }
         eventSystem.SetSelectedGameObject(null);
     }
