@@ -35,7 +35,6 @@ public class Train : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.Log(size);
         while (size > cars.Count && size < 6)
             NewCar();
         //Moving the train along the route
