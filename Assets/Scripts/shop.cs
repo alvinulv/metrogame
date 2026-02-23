@@ -21,14 +21,15 @@ public class shop : MonoBehaviour
     int upgradePrice5 = 20;
     int routes = 1;
     int trainsize = 1;
+    string cost = "Cost: ";
     // Start is called before the first frame update
     void Start()
     {
         eventSystem = FindFirstObjectByType<EventSystem>();
-        priceDisplay1.GetComponent<TMP_Text>().text = upgradePrice1.ToString();
-        priceDisplay3.GetComponent<TMP_Text>().text = upgradePrice3.ToString();
-        priceDisplay4.GetComponent<TMP_Text>().text = upgradePrice4.ToString();
-        priceDisplay5.GetComponent<TMP_Text>().text = upgradePrice5.ToString();
+        priceDisplay1.GetComponent<TMP_Text>().text = cost + upgradePrice1.ToString();
+        priceDisplay3.GetComponent<TMP_Text>().text = cost + upgradePrice3.ToString();
+        priceDisplay4.GetComponent<TMP_Text>().text = cost + upgradePrice4.ToString();
+        priceDisplay5.GetComponent<TMP_Text>().text = cost + upgradePrice5.ToString();
         moneyDisplay.GetComponent<TMP_Text>().text = "money: " + money.ToString();
     }
 
@@ -49,7 +50,7 @@ public class shop : MonoBehaviour
             {
                 float temp = (float)(upgradePrice1 * 2);
                 upgradePrice1 = (int)temp;
-                priceDisplay1.GetComponent<TMP_Text>().text = upgradePrice1.ToString();
+                priceDisplay1.GetComponent<TMP_Text>().text = cost + upgradePrice1.ToString();
             }
             else
             {
@@ -79,7 +80,7 @@ public class shop : MonoBehaviour
             float temp = (float)(upgradePrice3 * 1.2f);
             upgradePrice3 = (int)temp;
             Debug.Log(upgradePrice3);
-            priceDisplay3.GetComponent<TMP_Text>().text = upgradePrice3.ToString();
+            priceDisplay3.GetComponent<TMP_Text>().text = cost + upgradePrice3.ToString();
         }
         eventSystem.SetSelectedGameObject(null);
     }
@@ -95,7 +96,7 @@ public class shop : MonoBehaviour
             {
                 float temp = (float)(upgradePrice4 * 1.5f);
                 upgradePrice4 = (int)temp;
-                priceDisplay4.GetComponent<TMP_Text>().text = upgradePrice4.ToString();
+                priceDisplay4.GetComponent<TMP_Text>().text = cost + upgradePrice4.ToString();
             }
             else
             {
@@ -118,7 +119,7 @@ public class shop : MonoBehaviour
                 float temp = (float)(upgradePrice5 * 1.2f);
                 upgradePrice5 = (int)temp;
                 Debug.Log(upgradePrice5);
-                priceDisplay5.GetComponent<TMP_Text>().text = upgradePrice5.ToString();
+                priceDisplay5.GetComponent<TMP_Text>().text = cost + upgradePrice5.ToString();
             }
             else if (Stations.NextPersonCanSpawnMax > 2)
             {
@@ -131,7 +132,7 @@ public class shop : MonoBehaviour
                 {
                     float temp = (float)(upgradePrice5 * 1.1f);
                     upgradePrice5 = (int)temp;
-                    priceDisplay5.GetComponent<TMP_Text>().text = upgradePrice5.ToString();
+                    priceDisplay5.GetComponent<TMP_Text>().text = cost + upgradePrice5.ToString();
                 }
             }
         }
