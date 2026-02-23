@@ -51,7 +51,7 @@ public class shop : MonoBehaviour
                 upgradePrice1 = (int)temp;
                 priceDisplay1.GetComponent<TMP_Text>().text = upgradePrice1.ToString();
             }
-            else if (routes == 4)
+            else
             {
                 priceDisplay1.GetComponent<TMP_Text>().text = "max";
             }
@@ -97,7 +97,7 @@ public class shop : MonoBehaviour
                 upgradePrice4 = (int)temp;
                 priceDisplay4.GetComponent<TMP_Text>().text = upgradePrice4.ToString();
             }
-            else if (trainsize == 5)
+            else
             {
                 priceDisplay4.GetComponent<TMP_Text>().text = "max";
             }
