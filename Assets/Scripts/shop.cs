@@ -75,7 +75,7 @@ public class shop : MonoBehaviour
         if (money >= upgradePrice3)
         {
             money -= upgradePrice3;
-            Train.speed = Train.speed * 1.1f;
+            Train.speed = Train.speed * 1.25f;
             float temp = (float)(upgradePrice3 * 1.2f);
             upgradePrice3 = (int)temp;
             Debug.Log(upgradePrice3);
