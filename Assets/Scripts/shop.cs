@@ -17,7 +17,7 @@ public class shop : MonoBehaviour
     EventSystem eventSystem;
     int upgradePrice1 = 50;
     int upgradePrice3 = 10;
-    int upgradePrice4 = 10;
+    int upgradePrice4 = 20;
     int upgradePrice5 = 20;
     int routes = 1;
     int trainsize = 1;
