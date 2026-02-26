@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -42,5 +43,9 @@ public class GameManagement : MonoBehaviour
             button.GetComponent<Image>().color = _mat.color;
         i++;
         button.GetComponentInChildren<TMP_Text>().text = "Route " + i;
+    }
+    public void Leave()
+    {
+        Application.Quit();
     }
 }
